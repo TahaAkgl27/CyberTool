@@ -68,7 +68,7 @@ The repository is professionally structured. Remaining gaps are expected pre-lau
 | Roadmap table | ✅ |
 | FAQ (collapsible) | ✅ |
 | Security & disclaimer links | ✅ |
-| Screenshots | ⚠️ Placeholder images (not real UI captures) |
+| Screenshots | ✅ Real UI screenshot (`docs/images/CyberTool.jpg`) |
 | GitHub URLs | ✅ TahaAkgl27 |
 
 ### Documentation — Pass

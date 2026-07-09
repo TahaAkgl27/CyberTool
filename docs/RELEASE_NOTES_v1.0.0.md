@@ -50,6 +50,20 @@ Or open in Visual Studio and run the **CyberTool (Unpackaged)** profile.
 
 ---
 
+## Safety Notice
+
+CyberTool is for **authorized use only** — labs, education, and systems you own or have written permission to assess.
+
+Read before use:
+
+- [DISCLAIMER.md](../DISCLAIMER.md)
+- [SECURITY.md](../SECURITY.md)
+- [docs/safety.md](safety.md)
+
+Do not scan third-party networks without authorization.
+
+---
+
 ## Known Limitations
 
 - OpenAI API key stored in plain text locally (DPAPI planned for v1.1)
@@ -59,7 +73,7 @@ Or open in Visual Studio and run the **CyberTool (Unpackaged)** profile.
 
 ---
 
-## Future Roadmap
+## Roadmap
 
 | Version | Focus |
 |---------|-------|
@@ -68,13 +82,13 @@ Or open in Visual Studio and run the **CyberTool (Unpackaged)** profile.
 | v1.5 | Localization |
 | v2.0 | Enterprise Safe Mode, offline AI |
 
-See [docs/roadmap.md](docs/roadmap.md).
+See [docs/roadmap.md](roadmap.md).
 
 ---
 
-## Authorized Use Only
+## License
 
-Read [DISCLAIMER.md](DISCLAIMER.md) before use. CyberTool is for labs, education, and authorized corporate environments only.
+[MIT License](../LICENSE) — Copyright (c) 2026 CyberTool Contributors.
 
 ---
 
