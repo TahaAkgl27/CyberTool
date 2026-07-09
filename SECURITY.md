@@ -17,7 +17,7 @@ Security fixes are prioritized on the latest release branch. Upgrade guidance wi
 
 ## Reporting a Vulnerability
 
-**Please report security issues through [GitHub Security Advisories](https://github.com/OWNER/CyberTool/security/advisories/new).**
+**Please report security issues through [GitHub Security Advisories](https://github.com/TahaAkgl27/CyberTool/security/advisories/new).**
 
 ### Do NOT use public issues for:
 

@@ -1,6 +1,6 @@
 # GitHub Repository Quality Guide
 
-Recommendations for presenting CyberTool as a professional open source project on GitHub. Replace `OWNER` with your GitHub username or organization before publishing.
+Recommendations for presenting CyberTool as a professional open source project on GitHub. Published at [TahaAkgl27/CyberTool](https://github.com/TahaAkgl27/CyberTool).
 
 ---
 
@@ -19,10 +19,10 @@ Open-source Windows cybersecurity & IT diagnostics toolkit. Network scanning, WM
 **Suggested homepage URL:**
 
 ```
-https://github.com/OWNER/CyberTool#readme
+https://github.com/TahaAkgl27/CyberTool#readme
 ```
 
-When a project website exists, update to `https://OWNER.github.io/CyberTool/` or dedicated domain.
+When a project website exists, update to `https://TahaAkgl27.github.io/CyberTool/` or dedicated domain.
 
 ---
 
@@ -111,7 +111,7 @@ dotnet build CyberTool.csproj -c Release -p:Platform=x64
 ### Known Limitations
 - API key stored in plain text locally (DPAPI planned v1.1)
 - Placeholder screenshots in README (see docs/images/SCREENSHOT_CHECKLIST.md)
-- Replace `OWNER` in GitHub URLs before fork publish
+- GitHub URLs point to TahaAkgl27/CyberTool
 ```
 
 ---
@@ -170,12 +170,11 @@ When repository goes public:
 
 ## Pre-Publish Actions
 
-1. Replace all `OWNER` placeholders with real GitHub org/user
+1. Add repository topics
 2. Enable Issues and Discussions (optional)
-3. Add repository topics
-4. Upload social preview image
-5. Create `v1.0.0` release tag after screenshot pass
-6. Pin README and CONTRIBUTING in wiki or discussions
+3. Upload social preview image
+4. Create `v1.0.0` release tag after screenshot pass
+5. Pin README and CONTRIBUTING in wiki or discussions
 
 ---
 

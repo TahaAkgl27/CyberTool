@@ -160,7 +160,7 @@ This disclaimer may be updated as the project evolves. Continued use after updat
 
 ## Contact
 
-- **Security vulnerabilities:** [GitHub Security Advisories](https://github.com/OWNER/CyberTool/security/advisories/new)
+- **Security vulnerabilities:** [GitHub Security Advisories](https://github.com/TahaAkgl27/CyberTool/security/advisories/new)
 - **General questions:** GitHub Issues (not for vulnerabilities)
 - **License terms:** [LICENSE](LICENSE)
 

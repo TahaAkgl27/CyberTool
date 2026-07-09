@@ -35,7 +35,7 @@ Honest review of CyberTool's open source readiness as of Sprint 3. Ratings use a
 
 ### Gaps
 
-- Placeholder `OWNER` in GitHub URLs
+- GitHub URLs use TahaAkgl27 (completed)
 - No real screenshots or demo GIF yet
 - `logo.png` referenced but not yet committed
 - No `docs/glossary.md` (proposed in FIRST_ISSUES)
@@ -43,7 +43,7 @@ Honest review of CyberTool's open source readiness as of Sprint 3. Ratings use a
 ### Improvements
 
 1. Capture screenshots per checklist
-2. Replace OWNER before public push
+2. Capture real screenshots before major announcement
 3. Add CHANGELOG entry per release
 
 ---
@@ -213,7 +213,7 @@ Honest review of CyberTool's open source readiness as of Sprint 3. Ratings use a
 
 | Priority | Action |
 |----------|--------|
-| P0 | Replace OWNER, publish repository |
+| P0 | Capture real screenshots |
 | P1 | Real screenshots + v1.0.0 release |
 | P1 | Create 5 good first issues on GitHub |
 | P2 | DPAPI for API key |
@@ -224,4 +224,4 @@ Honest review of CyberTool's open source readiness as of Sprint 3. Ratings use a
 
 ## Conclusion
 
-CyberTool has **strong documentation and security hygiene** for an early-stage open source project. The primary weaknesses are **expected for pre-launch**: no community metrics, no automated tests, and missing visual assets. Addressing OWNER replacement, screenshots, and the first release will move community and release scores materially upward.
+CyberTool has **strong documentation and security hygiene** for an early-stage open source project. The primary weaknesses are **expected for pre-launch**: no community metrics, no automated tests, and missing visual assets. Addressing screenshots and the first release will move community and release scores materially upward.

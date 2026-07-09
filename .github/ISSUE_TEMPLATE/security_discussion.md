@@ -6,7 +6,7 @@ labels: security
 assignees: ''
 ---
 
-> **Do not report undisclosed vulnerabilities here.** Use [GitHub Security Advisories](https://github.com/OWNER/CyberTool/security/advisories/new) instead.
+> **Do not report undisclosed vulnerabilities here.** Use [GitHub Security Advisories](https://github.com/TahaAkgl27/CyberTool/security/advisories/new) instead.
 
 ## Security Topic
 

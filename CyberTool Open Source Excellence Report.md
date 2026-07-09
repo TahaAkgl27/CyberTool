@@ -13,7 +13,7 @@ CyberTool has been transformed from a private development project into a **credi
 
 **Final decision:** 🟡 **Ready After Minor Fixes**
 
-The repository is professionally structured. Remaining gaps are expected pre-launch items: replace `OWNER` placeholders, capture real UI screenshots, publish `v1.0.0`, and rotate any previously exposed API key.
+The repository is professionally structured. Remaining gaps are expected pre-launch items: capture real UI screenshots, publish `v1.0.0` release tag, and rotate any previously exposed API key.
 
 ---
 
@@ -69,7 +69,7 @@ The repository is professionally structured. Remaining gaps are expected pre-lau
 | FAQ (collapsible) | ✅ |
 | Security & disclaimer links | ✅ |
 | Screenshots | ⚠️ Placeholder images (not real UI captures) |
-| `OWNER` in URLs | ⚠️ Must replace before publish |
+| GitHub URLs | ✅ TahaAkgl27 |
 
 ### Documentation — Pass
 
@@ -168,7 +168,7 @@ Placeholder PNGs exist so README links resolve. Real UI captures per `SCREENSHOT
 | Release template | ✅ in GITHUB_REPOSITORY.md |
 | GitHub Release v1.0.0 | ❌ Not published |
 | Signed binaries | ❌ Not available |
-| OWNER replaced | ❌ |
+| GitHub URLs updated | ✅ |
 
 ### Claude Application Readiness — Pass (minor fixes)
 
@@ -197,7 +197,7 @@ Comparable to early-stage projects from established orgs:
 
 ### Critical (before public push)
 
-1. **Replace `OWNER`** in all GitHub URLs (README, SECURITY.md, templates, docs)
+1. **Capture real screenshots** per SCREENSHOT_CHECKLIST.md
 2. **Rotate exposed OpenAI API key** if it was ever committed to git history
 3. **Verify git history** does not contain secrets (consider `git filter-repo` if key was committed)
 
@@ -230,7 +230,7 @@ Comparable to early-stage projects from established orgs:
 
 | Priority | Action | Effort |
 |----------|--------|--------|
-| P0 | Replace `OWNER` → real GitHub org/user | 15 min |
+| P0 | Capture real screenshots | 1–2 hours |
 | P0 | Rotate OpenAI key if previously exposed | 5 min |
 | P1 | Capture 8 screenshots (checklist) | 1–2 hours |
 | P1 | Push to GitHub, create v1.0.0 release | 30 min |
@@ -257,11 +257,11 @@ Comparable to early-stage projects from established orgs:
 
 CyberTool is **not** 🔴 Not Ready — security cleanup from Sprint 2 holds, build passes, documentation is flagship quality.
 
-CyberTool is **not yet** 🟢 Ready for GitHub Public + Claude for Open Source — placeholder screenshots, `OWNER` URLs, and unpublished release prevent full flagship status.
+CyberTool is **not yet** 🟢 Ready for GitHub Public + Claude for Open Source — placeholder screenshots and unpublished release tag prevent full flagship status.
 
 **To reach 🟢:**
 
-1. Replace `OWNER`
+1. Capture real screenshots
 2. Capture real screenshots (minimum: dashboard, scan, settings, results)
 3. Publish repository and `v1.0.0` release
 4. Confirm API key rotation if applicable

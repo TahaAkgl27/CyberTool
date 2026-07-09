@@ -6,14 +6,14 @@
 
 ## Documentation
 
-### 1. Replace OWNER placeholder across repository
+### 1. Verify GitHub URLs and badges
 
 | Field | Value |
 |-------|-------|
 | **Difficulty** | Easy |
 | **Labels** | `documentation`, `good first issue` |
-| **Priority** | P0 |
-| **Description** | Search for `OWNER` in README, SECURITY.md, issue templates, and docs. Replace with actual GitHub org/username. Verify all badge and clone URLs resolve. |
+| **Priority** | P3 |
+| **Description** | Verify all clone, badge, and security advisory URLs resolve to https://github.com/TahaAkgl27/CyberTool. |
 
 ### 2. Capture README screenshots per checklist
 

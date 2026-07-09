@@ -49,7 +49,7 @@ timeline
 
 ### Remaining for v1.0 polish
 
-- [ ] Replace `OWNER` placeholder in GitHub URLs
+- [x] GitHub URLs updated to TahaAkgl27
 - [ ] Capture real screenshots ([SCREENSHOT_CHECKLIST.md](images/SCREENSHOT_CHECKLIST.md))
 - [ ] Publish `v1.0.0` GitHub Release
 - [ ] Optional demo GIF ([GIF_RECORDING_GUIDE.md](GIF_RECORDING_GUIDE.md))

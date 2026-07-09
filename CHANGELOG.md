@@ -33,4 +33,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Publisher and branding normalized to **CyberTool** for open source release
 
-[1.0.0]: https://github.com/OWNER/CyberTool/releases/tag/v1.0.0
+[1.0.0]: https://github.com/TahaAkgl27/CyberTool/releases/tag/v1.0.0

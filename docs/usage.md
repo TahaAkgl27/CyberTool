@@ -34,7 +34,7 @@ Complete operator guide for authorized Windows security diagnostics with CyberTo
 **Steps:**
 
 ```powershell
-git clone https://github.com/OWNER/CyberTool.git
+git clone https://github.com/TahaAkgl27/CyberTool.git
 cd CyberTool
 dotnet restore CyberTool.csproj
 dotnet build CyberTool.csproj -c Release -p:Platform=x64
@@ -47,7 +47,7 @@ dotnet build CyberTool.csproj -c Release -p:Platform=x64
 
 ### Future Binary Releases
 
-Pre-built releases will be published on [GitHub Releases](https://github.com/OWNER/CyberTool/releases) when available.
+Pre-built releases will be published on [GitHub Releases](https://github.com/TahaAkgl27/CyberTool/releases) when available.
 
 ---
 

@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/OWNER/CyberTool/actions/workflows/build.yml"><img src="https://img.shields.io/github/actions/workflow/status/OWNER/CyberTool/build.yml?style=flat-square&label=Build" alt="Build" /></a>
+  <a href="https://github.com/TahaAkgl27/CyberTool/actions/workflows/build.yml"><img src="https://img.shields.io/github/actions/workflow/status/TahaAkgl27/CyberTool/build.yml?style=flat-square&label=Build" alt="Build" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" alt="License" /></a>
   <a href="https://dotnet.microsoft.com/"><img src="https://img.shields.io/badge/.NET-8.0-512BD4?style=flat-square&logo=dotnet&logoColor=white" alt=".NET 8" /></a>
   <a href="https://www.microsoft.com/windows"><img src="https://img.shields.io/badge/Windows-10%2F11-0078D4?style=flat-square&logo=windows&logoColor=white" alt="Windows" /></a>
@@ -182,7 +182,7 @@ Full diagrams: [docs/architecture.md](docs/architecture.md)
 ### Build from Source
 
 ```powershell
-git clone https://github.com/OWNER/CyberTool.git
+git clone https://github.com/TahaAkgl27/CyberTool.git
 cd CyberTool
 dotnet restore CyberTool.csproj
 dotnet build CyberTool.csproj -c Release -p:Platform=x64
@@ -270,7 +270,7 @@ No. Scanning, enumeration, reporting, and simulation work without AI. The key en
 <details>
 <summary><strong>How do I report a security vulnerability?</strong></summary>
 
-Use [GitHub Security Advisories](https://github.com/OWNER/CyberTool/security/advisories/new). Do not file public issues for undisclosed vulnerabilities.
+Use [GitHub Security Advisories](https://github.com/TahaAkgl27/CyberTool/security/advisories/new). Do not file public issues for undisclosed vulnerabilities.
 </details>
 
 ---

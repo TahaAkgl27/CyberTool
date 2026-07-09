@@ -202,6 +202,6 @@ Claude support would help maintainers ship **documentation excellence, secure cr
 
 CyberTool seeks to make Windows security diagnostics **more accessible, more transparent, and more educational**. Open source and thoughtful AI-assisted development together can help maintainers deliver safer tooling for the people who defend real systems—without encouraging misuse or fabricating community success stories we have not yet earned.
 
-**Repository:** `https://github.com/OWNER/CyberTool`  
+**Repository:** `https://github.com/TahaAkgl27/CyberTool`  
 **License:** MIT  
 **Status:** Preparing for public release

@@ -21,7 +21,7 @@ Thank you for your interest in contributing to CyberTool. This project welcomes 
 ### Build from Source
 
 ```powershell
-git clone https://github.com/OWNER/CyberTool.git
+git clone https://github.com/TahaAkgl27/CyberTool.git
 cd CyberTool
 dotnet restore CyberTool.csproj
 dotnet build CyberTool.csproj -c Release -p:Platform=x64
