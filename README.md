@@ -145,12 +145,12 @@ CyberTool is **not** intended for unauthorized testing, covert operations, or us
 ## Screenshots
 
 <p align="center">
-  <img src="docs/images/screenshot-dashboard.png" alt="Dashboard" width="32%" />
-  <img src="docs/images/screenshot-scan.png" alt="Network Scan" width="32%" />
-  <img src="docs/images/screenshot-settings.png" alt="Settings" width="32%" />
+  <img src="docs/images/CyberTool.png" alt="CyberTool Screenshot" width="100%">
 </p>
 
-<p align="center"><em>Placeholder images — see <a href="docs/images/SCREENSHOT_CHECKLIST.md">Screenshot Checklist</a> for capture guidance.</em></p>
+<p align="center">
+CyberTool v1.0.0 running on Windows. Demonstrates port scanning, attack chain visualization, security recommendations and host analysis in a controlled demo environment.
+</p>
 
 ---
 
