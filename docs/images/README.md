@@ -2,12 +2,9 @@
 
 | File | Status | Notes |
 |------|--------|-------|
-| `logo.png` | ✅ Present | README hero logo |
-| `screenshot-dashboard.png` | ⚠️ Placeholder | Replace per checklist |
-| `screenshot-scan.png` | ⚠️ Placeholder | Replace per checklist |
-| `screenshot-settings.png` | ⚠️ Placeholder | Replace per checklist |
+| `logo.png` | ✅ | README hero logo (optimized) |
+| `CyberTool.jpg` | ✅ | Primary UI screenshot (v1.0.0 premium UI) |
 
-**Capture guide:** [SCREENSHOT_CHECKLIST.md](SCREENSHOT_CHECKLIST.md)  
-**Demo GIF guide:** [../GIF_RECORDING_GUIDE.md](../GIF_RECORDING_GUIDE.md)
+Placeholder screenshots have been removed.
 
-Recommended capture size: 1280×720 (16:9). Redact API keys and real hostnames.
+**Capture guide:** [SCREENSHOT_CHECKLIST.md](SCREENSHOT_CHECKLIST.md)

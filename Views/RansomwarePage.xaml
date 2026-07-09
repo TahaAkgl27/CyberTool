@@ -8,7 +8,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converters="using:CyberTool.Converters"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Background="{StaticResource CyberPageBackground}">
 
     <Page.DataContext>
         <vm:RansomwareViewModel x:Name="ViewModel" />
@@ -18,30 +19,21 @@
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <converters:SeverityColorConverter x:Key="SeverityConverter" />
         
-        <Style x:Key="StatCardStyle" TargetType="Border">
-            <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}"/>
-            <Setter Property="BorderBrush" Value="#15FFFFFF"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="CornerRadius" Value="12"/>
-            <Setter Property="Padding" Value="20"/>
+        <Style x:Key="StatCardStyle" TargetType="Border" BasedOn="{StaticResource ModernCardStyle}">
             <Setter Property="Margin" Value="0,0,16,0"/>
         </Style>
     </Page.Resources>
 
-    <Grid Padding="32" RowSpacing="32">
+    <Grid Padding="32" RowSpacing="28">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/> <!-- Header & Input -->
-            <RowDefinition Height="Auto"/> <!-- Main Stats -->
-            <RowDefinition Height="*"/>    <!-- Host List -->
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- 1. Header & Input -->
-        <StackPanel Spacing="16">
-            <StackPanel Orientation="Horizontal" Spacing="12">
-                <FontIcon Glyph="&#xE9ca;" FontSize="28" Foreground="#E74C3C"/>
-                <TextBlock Text="Ransomware Readiness Score" FontSize="28" FontWeight="Bold"/>
-            </StackPanel>
-            <TextBlock Text="Fidye yazılımı hazırlık seviyenizi ölçün. Ağdaki yayılma riskini ve zayıf halkaları tespit edin." Opacity="0.6" FontSize="16"/>
+        <StackPanel Spacing="8">
+            <TextBlock Text="Fidye Analizi" Style="{StaticResource PageTitleStyle}"/>
+            <TextBlock Text="Fidye yazılımı hazırlık seviyenizi ölçün. Ağdaki yayılma riskini ve zayıf halkaları tespit edin." Style="{StaticResource PageSubtitleStyle}"/>
 
             <!-- Input Bar -->
             <Grid Margin="0,16,0,0" ColumnSpacing="16">
@@ -51,9 +43,9 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 
-                <TextBox Header="VLAN / Subnet (C Class)" Text="{Binding Subnet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="192.168.1" />
+                <TextBox Header="VLAN / Subnet (C Class)" Text="{Binding Subnet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="192.168.100" Style="{StaticResource CyberTextBoxStyle}"/>
                 
-                <Button Grid.Column="1" Command="{Binding StartScanCommand}" Style="{StaticResource AccentButtonStyle}" VerticalAlignment="Bottom" Height="34">
+                <Button Grid.Column="1" Command="{Binding StartScanCommand}" Style="{StaticResource CyberPrimaryButtonStyle}" VerticalAlignment="Bottom" Height="40">
                     <StackPanel Orientation="Horizontal" Spacing="8">
                         <FontIcon Glyph="&#xE768;"/>
                         <TextBlock Text="Analizi Başlat"/>
@@ -75,7 +67,7 @@
             </Grid.ColumnDefinitions>
             
             <!-- BIG PERCENTAGE -->
-            <Border Width="240" Height="240" CornerRadius="120" BorderBrush="#20E74C3C" BorderThickness="1" Background="#05E74C3C">
+            <Border Width="240" Height="240" CornerRadius="120" BorderBrush="{StaticResource CyberBorderBrush}" BorderThickness="1" Background="#0DEF4444">
                 <Grid>
                     <ProgressRing Value="100" Width="240" Height="240" Foreground="#10E74C3C" IsIndeterminate="False"/>
                     <ProgressRing Value="{Binding ReadinessScore}" Width="240" Height="240" Foreground="#E74C3C" IsIndeterminate="False"/>

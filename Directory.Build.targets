@@ -1,4 +1,15 @@
 <Project>
-  <PropertyGroup>
-  </PropertyGroup>
+  <!--
+    WinUI XAML compiler (VS MSBuild) calls GetLatestMSVCVersion when VsInstallRoot is set.
+    If "Desktop development with C++" is not installed, MSVC\Tools folder is missing and VS build fails.
+    dotnet CLI leaves VsInstallRoot empty and builds successfully with empty VC paths.
+    This override matches CLI behavior so F5 works without the full C++ workload.
+    For production builds, still install: VS Installer → Desktop development with C++.
+  -->
+  <Target Name="GetVCInstallPath" Condition="'$(VCInstallPath32)' == '' and '$(VCInstallPath64)' == ''">
+    <PropertyGroup>
+      <VCInstallPath32 />
+      <VCInstallPath64 />
+    </PropertyGroup>
+  </Target>
 </Project>

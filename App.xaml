@@ -11,6 +11,39 @@
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
             </ResourceDictionary.MergedDictionaries>
 
+            <!-- Accent override -->
+            <Color x:Key="SystemAccentColor">#8B5CF6</Color>
+            <Color x:Key="SystemAccentColorLight1">#9F7AEA</Color>
+            <Color x:Key="SystemAccentColorLight2">#A78BFA</Color>
+            <Color x:Key="SystemAccentColorLight3">#C4B5FD</Color>
+            <Color x:Key="SystemAccentColorDark1">#7C3AED</Color>
+            <Color x:Key="SystemAccentColorDark2">#6D28D9</Color>
+            <Color x:Key="SystemAccentColorDark3">#5B21B6</Color>
+
+            <!-- Premium palette -->
+            <SolidColorBrush x:Key="CyberBgBrush" Color="#0F1117"/>
+            <SolidColorBrush x:Key="CyberCardBrush" Color="#171A22"/>
+            <SolidColorBrush x:Key="CyberCardElevatedBrush" Color="#1C2030"/>
+            <SolidColorBrush x:Key="CyberBorderBrush" Color="#2B2F3A"/>
+            <SolidColorBrush x:Key="CyberBorderSubtleBrush" Color="#1E222D"/>
+            <SolidColorBrush x:Key="CyberAccentBrush" Color="#8B5CF6"/>
+            <SolidColorBrush x:Key="CyberAccentMutedBrush" Color="#1A8B5CF6"/>
+            <SolidColorBrush x:Key="CyberCriticalBrush" Color="#EF4444"/>
+            <SolidColorBrush x:Key="CyberWarningBrush" Color="#F59E0B"/>
+            <SolidColorBrush x:Key="CyberSafeBrush" Color="#10B981"/>
+            <SolidColorBrush x:Key="CyberTextPrimaryBrush" Color="#F9FAFB"/>
+            <SolidColorBrush x:Key="CyberTextSecondaryBrush" Color="#9CA3AF"/>
+            <SolidColorBrush x:Key="CyberTextMutedBrush" Color="#6B7280"/>
+            <SolidColorBrush x:Key="CyberPageBackground" Color="#0F1117"/>
+            <SolidColorBrush x:Key="CyberSidebarBrush" Color="#12151C"/>
+            <SolidColorBrush x:Key="CyberSidebarHoverBrush" Color="#1A1F2B"/>
+            <SolidColorBrush x:Key="CyberSidebarActiveBrush" Color="#2A1F4D"/>
+
+            <LinearGradientBrush x:Key="CyberSidebarGradient" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#141820" Offset="0"/>
+                <GradientStop Color="#0F1117" Offset="1"/>
+            </LinearGradientBrush>
+
             <converters:StringFormatConverter x:Key="StringFormatConverter" />
             <converters:SeverityColorConverter x:Key="SeverityConverter" />
             <converters:IntToVisibilityConverter x:Key="IntToVisibilityConverter" />
@@ -19,19 +52,120 @@
             <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
             <converters:BoolNegationConverter x:Key="BoolNegationConverter" />
 
-            <!-- Global Styles -->
+            <!-- Cards -->
             <Style x:Key="ModernCardStyle" TargetType="Border">
-                <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}"/>
-                <Setter Property="BorderBrush" Value="#15FFFFFF"/>
+                <Setter Property="Background" Value="{StaticResource CyberCardBrush}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource CyberBorderBrush}"/>
                 <Setter Property="BorderThickness" Value="1"/>
-                <Setter Property="CornerRadius" Value="12"/>
+                <Setter Property="CornerRadius" Value="18"/>
                 <Setter Property="Padding" Value="24"/>
             </Style>
 
+            <Style x:Key="HeroCardStyle" TargetType="Border" BasedOn="{StaticResource ModernCardStyle}">
+                <Setter Property="Background" Value="{StaticResource CyberCardElevatedBrush}"/>
+                <Setter Property="CornerRadius" Value="20"/>
+                <Setter Property="Padding" Value="28"/>
+            </Style>
+
             <Style x:Key="SectionHeaderStyle" TargetType="TextBlock">
-                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="FontSize" Value="18"/>
                 <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Foreground" Value="{StaticResource CyberTextPrimaryBrush}"/>
                 <Setter Property="Margin" Value="0,0,0,16"/>
+            </Style>
+
+            <Style x:Key="PageTitleStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="28"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Foreground" Value="{StaticResource CyberTextPrimaryBrush}"/>
+            </Style>
+
+            <Style x:Key="PageSubtitleStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Foreground" Value="{StaticResource CyberTextSecondaryBrush}"/>
+                <Setter Property="TextWrapping" Value="Wrap"/>
+            </Style>
+
+            <Style x:Key="CyberLabelStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="11"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Foreground" Value="{StaticResource CyberTextMutedBrush}"/>
+                <Setter Property="CharacterSpacing" Value="80"/>
+            </Style>
+
+            <!-- Buttons -->
+            <Style x:Key="CyberPrimaryButtonStyle" TargetType="Button" BasedOn="{StaticResource AccentButtonStyle}">
+                <Setter Property="Background" Value="{StaticResource CyberAccentBrush}"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="Padding" Value="20,10"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+            </Style>
+
+            <Style x:Key="CyberSecondaryButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="{StaticResource CyberTextPrimaryBrush}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource CyberBorderBrush}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="Padding" Value="16,10"/>
+            </Style>
+
+            <Style x:Key="CyberIconButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="{StaticResource CyberCardBrush}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource CyberBorderBrush}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="Width" Value="40"/>
+                <Setter Property="Height" Value="40"/>
+                <Setter Property="Padding" Value="0"/>
+            </Style>
+
+            <!-- Inputs -->
+            <Style x:Key="CyberTextBoxStyle" TargetType="TextBox">
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="Padding" Value="12,10"/>
+                <Setter Property="Background" Value="#12151C"/>
+                <Setter Property="BorderBrush" Value="{StaticResource CyberBorderBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource CyberTextPrimaryBrush}"/>
+            </Style>
+
+            <Style x:Key="CyberNumberBoxStyle" TargetType="NumberBox">
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="Background" Value="#12151C"/>
+                <Setter Property="BorderBrush" Value="{StaticResource CyberBorderBrush}"/>
+            </Style>
+
+            <!-- Badges -->
+            <Style x:Key="CyberBadgeStyle" TargetType="Border">
+                <Setter Property="CornerRadius" Value="8"/>
+                <Setter Property="Padding" Value="10,4"/>
+                <Setter Property="Background" Value="#1A1F2B"/>
+                <Setter Property="BorderBrush" Value="{StaticResource CyberBorderBrush}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+            </Style>
+
+            <!-- Table header -->
+            <Style x:Key="CyberTableHeaderStyle" TargetType="Border">
+                <Setter Property="Background" Value="#1A1F2B"/>
+                <Setter Property="CornerRadius" Value="12"/>
+                <Setter Property="Padding" Value="16,12"/>
+                <Setter Property="BorderBrush" Value="{StaticResource CyberBorderSubtleBrush}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+            </Style>
+
+            <!-- ListView row -->
+            <Style x:Key="CyberListItemStyle" TargetType="ListViewItem">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="Margin" Value="0,3"/>
+                <Setter Property="Padding" Value="12,8"/>
+                <Setter Property="CornerRadius" Value="12"/>
+                <Setter Property="Background" Value="Transparent"/>
+            </Style>
+
+            <!-- Pivot -->
+            <Style x:Key="CyberPivotStyle" TargetType="Pivot">
+                <Setter Property="Margin" Value="0,8,0,0"/>
             </Style>
 
         </ResourceDictionary>

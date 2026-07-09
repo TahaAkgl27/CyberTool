@@ -6,137 +6,214 @@
     xmlns:local="using:CyberTool.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Background="{StaticResource CyberPageBackground}">
 
-    <Grid Padding="24" RowSpacing="24">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Padding="32" RowSpacing="28">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-        <!-- Hero Section -->
-        <Grid CornerRadius="16" Padding="32">
-            <Grid.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="#0F172A" Offset="0.0" />
-                    <GradientStop Color="#1E293B" Offset="1.0" />
-                </LinearGradientBrush>
-            </Grid.Background>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            
-            <StackPanel Spacing="12" VerticalAlignment="Center">
-                <StackPanel Orientation="Horizontal" Spacing="12">
-                     <FontIcon Glyph="&#xE774;" FontSize="32" Foreground="{ThemeResource SystemAccentColorLight2}"/>
-                     <TextBlock Text="CyberTool" FontSize="32" FontWeight="Bold" Foreground="White" />
+            <!-- Header -->
+            <Grid>
+                <StackPanel Spacing="6">
+                    <TextBlock Text="Dashboard" Style="{StaticResource PageTitleStyle}"/>
+                    <TextBlock Text="Sistem güvenliği, port tarama ve zafiyet analizi genel görünümü" Style="{StaticResource PageSubtitleStyle}"/>
                 </StackPanel>
-                <TextBlock Text="Gelişmiş Ağ ve Uygulama Güvenliği Analiz Platformu" FontSize="16" Foreground="#94A3B8" />
-                <Border Background="#33475569" HorizontalAlignment="Left" CornerRadius="4" Padding="8,4" Margin="0,8,0,0">
-                    <TextBlock Text="v1.2.0 • AGENT MODE" FontSize="12" Foreground="#64748B" FontWeight="SemiBold"/>
-                </Border>
-            </StackPanel>
-
-            <FontIcon Grid.Column="1" Glyph="&#xE909;" FontSize="80" Foreground="{ThemeResource SystemAccentColor}" Opacity="0.15" VerticalAlignment="Center"/>
-        </Grid>
-
-        <!-- Dashboard Cards -->
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <Grid ColumnSpacing="20" RowSpacing="20">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-
-                <!-- Card 1: Quick Start -->
-                <Border Grid.Row="0" Grid.Column="0" CornerRadius="12" BorderThickness="1" BorderBrush="#20FFFFFF">
-                    <Border.Background>
-                        <SolidColorBrush Color="{ThemeResource SystemChromeMediumColor}" Opacity="0.5"/>
-                    </Border.Background>
-                    <Grid Padding="24" RowSpacing="16">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal" Spacing="12">
-                            <Ellipse Width="40" Height="40" Fill="#15803D" />
-                            <FontIcon Glyph="&#xE768;" FontSize="18" Foreground="White" Margin="-29,-1,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            <TextBlock Text="Hızlı Başlangıç" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Spacing="10">
+                    <Button Style="{StaticResource CyberSecondaryButtonStyle}">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <FontIcon Glyph="&#xE9F9;" FontSize="14"/>
+                            <TextBlock Text="Yönetici Raporu (PDF)"/>
                         </StackPanel>
-                        <TextBlock Grid.Row="1" Text="Tarama ekranına gidip hedefi girerek (yalnızca izinli sistemlerde) temel kontrol çalıştırabilirsiniz. Hızlı, etkili ve güvenli tarama." 
-                                   TextWrapping="Wrap" Opacity="0.7" LineHeight="20"/>
-                    </Grid>
-                </Border>
-
-                <!-- Card 2: Security -->
-                <Border Grid.Row="0" Grid.Column="1" CornerRadius="12" BorderThickness="1" BorderBrush="#20FFFFFF">
-                    <Border.Background>
-                        <SolidColorBrush Color="{ThemeResource SystemChromeMediumColor}" Opacity="0.5"/>
-                    </Border.Background>
-                    <Grid Padding="24" RowSpacing="16">
-                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal" Spacing="12">
-                             <Ellipse Width="40" Height="40" Fill="#B91C1C">
-                             </Ellipse>
-                             <FontIcon Glyph="&#xE72E;" FontSize="18" Foreground="White" Margin="-29,-1,0,0" VerticalAlignment="Center"/>
-                            <TextBlock Text="Güvenlik ve Yetkilendirme" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                    </Button>
+                    <Button Style="{StaticResource CyberSecondaryButtonStyle}">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <FontIcon Glyph="&#xE8A5;" FontSize="14"/>
+                            <TextBlock Text="Teknik Detay (CSV)"/>
                         </StackPanel>
-                        <TextBlock Grid.Row="1" Text="Sadece kendi sistemlerinizi veya yazılı izin aldığınız hedefleri test edin. Etik ve yasal sınırlar içinde kalın." 
-                                   TextWrapping="Wrap" Opacity="0.7" LineHeight="20"/>
-                    </Grid>
-                </Border>
-
-                <!-- Card 3: Reports -->
-                <Border Grid.Row="1" Grid.Column="0" CornerRadius="12" BorderThickness="1" BorderBrush="#20FFFFFF">
-                    <Border.Background>
-                        <SolidColorBrush Color="{ThemeResource SystemChromeMediumColor}" Opacity="0.5"/>
-                    </Border.Background>
-                    <Grid Padding="24" RowSpacing="16">
-                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal" Spacing="12">
-                             <Ellipse Width="40" Height="40" Fill="#A855F7">
-                             </Ellipse>
-                             <FontIcon Glyph="&#xE9F9;" FontSize="18" Foreground="White" Margin="-29,-1,0,0" VerticalAlignment="Center"/>
-                            <TextBlock Text="Raporlar &amp; Bulgular" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <TextBlock Grid.Row="1" Text="Tarama çıktıları session bazlı listelenir. Her bulgu için risk seviyesi, kanıt ve çözüm önerileri sunulur." 
-                                   TextWrapping="Wrap" Opacity="0.7" LineHeight="20"/>
-                    </Grid>
-                </Border>
-
-                <!-- Card 4: Future -->
-                <Border Grid.Row="1" Grid.Column="1" CornerRadius="12" BorderThickness="1" BorderBrush="#20FFFFFF">
-                     <Border.Background>
-                        <SolidColorBrush Color="{ThemeResource SystemChromeMediumColor}" Opacity="0.5"/>
-                    </Border.Background>
-                    <Grid Padding="24" RowSpacing="16">
-                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal" Spacing="12">
-                             <Ellipse Width="40" Height="40" Fill="#0369A1">
-                             </Ellipse>
-                             <FontIcon Glyph="&#xE76C;" FontSize="18" Foreground="White" Margin="-29,-1,0,0" VerticalAlignment="Center"/>
-                            <TextBlock Text="Sonraki Adımlar" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <TextBlock Grid.Row="1" Text="PDF/HTML raporlama, Nmap entegrasyonu ve otomatik exploit denemeleri yakında gelecek özellikler arasında." 
-                                   TextWrapping="Wrap" Opacity="0.7" LineHeight="20"/>
-                    </Grid>
-                </Border>
-
+                    </Button>
+                    <Button Style="{StaticResource CyberIconButtonStyle}">
+                        <FontIcon Glyph="&#xEA8F;" FontSize="14"/>
+                    </Button>
+                    <Button Style="{StaticResource CyberIconButtonStyle}">
+                        <FontIcon Glyph="&#xE713;" FontSize="14"/>
+                    </Button>
+                </StackPanel>
             </Grid>
-        </ScrollViewer>
-    </Grid>
+
+            <!-- Hero row: Security Score + Trend + Risk Distribution + Quick Summary -->
+            <Grid Grid.Row="1" ColumnSpacing="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.1*"/>
+                    <ColumnDefinition Width="1.4*"/>
+                    <ColumnDefinition Width="0.9*"/>
+                    <ColumnDefinition Width="0.9*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Security Score Hero -->
+                <Border Style="{StaticResource HeroCardStyle}">
+                    <StackPanel Spacing="16" VerticalAlignment="Center">
+                        <TextBlock Text="GÜVENLİK SKORU" Style="{StaticResource CyberLabelStyle}"/>
+                        <Grid Width="120" Height="120" HorizontalAlignment="Center">
+                            <ProgressRing Value="100" Width="120" Height="120" Foreground="#1A1F2B" IsIndeterminate="False"/>
+                            <ProgressRing Value="65" Width="120" Height="120" Foreground="{StaticResource CyberWarningBrush}" IsIndeterminate="False"/>
+                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <TextBlock Text="65" FontSize="32" FontWeight="Bold" Foreground="{StaticResource CyberTextPrimaryBrush}" HorizontalAlignment="Center"/>
+                                <TextBlock Text="/100" FontSize="12" Foreground="{StaticResource CyberTextMutedBrush}" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Grid>
+                        <Border Style="{StaticResource CyberBadgeStyle}" HorizontalAlignment="Center" Background="#1AF59E0B">
+                            <TextBlock Text="Orta Risk" FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource CyberWarningBrush}"/>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Risk Trend -->
+                <Border Grid.Column="1" Style="{StaticResource ModernCardStyle}">
+                    <StackPanel Spacing="16">
+                        <Grid>
+                            <TextBlock Text="30 GÜNLÜK RİSK TRENDİ" Style="{StaticResource CyberLabelStyle}"/>
+                            <ComboBox HorizontalAlignment="Right" Width="100" SelectedIndex="0" CornerRadius="8">
+                                <ComboBoxItem Content="30 Gün"/>
+                            </ComboBox>
+                        </Grid>
+                        <Border Height="120" VerticalAlignment="Bottom" BorderBrush="{StaticResource CyberBorderSubtleBrush}" BorderThickness="0,0,0,1">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Spacing="4" HorizontalAlignment="Stretch">
+                                <Rectangle Width="10" Height="40" Fill="#338B5CF6" RadiusX="3" RadiusY="3"/>
+                                <Rectangle Width="10" Height="55" Fill="#558B5CF6" RadiusX="3" RadiusY="3"/>
+                                <Rectangle Width="10" Height="35" Fill="#338B5CF6" RadiusX="3" RadiusY="3"/>
+                                <Rectangle Width="10" Height="70" Fill="#778B5CF6" RadiusX="3" RadiusY="3"/>
+                                <Rectangle Width="10" Height="50" Fill="#558B5CF6" RadiusX="3" RadiusY="3"/>
+                                <Rectangle Width="10" Height="80" Fill="#998B5CF6" RadiusX="3" RadiusY="3"/>
+                                <Rectangle Width="10" Height="45" Fill="#448B5CF6" RadiusX="3" RadiusY="3"/>
+                                <Rectangle Width="10" Height="60" Fill="#668B5CF6" RadiusX="3" RadiusY="3"/>
+                                <Rectangle Width="10" Height="75" Fill="#888B5CF6" RadiusX="3" RadiusY="3"/>
+                                <Rectangle Width="10" Height="52" Fill="#558B5CF6" RadiusX="3" RadiusY="3"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Risk Distribution -->
+                <Border Grid.Column="2" Style="{StaticResource ModernCardStyle}">
+                    <StackPanel Spacing="10">
+                        <TextBlock Text="RİSK DAĞILIMI" Style="{StaticResource CyberLabelStyle}"/>
+                        <StackPanel Spacing="8">
+                            <Grid><TextBlock Text="Kritik" Foreground="{StaticResource CyberTextSecondaryBrush}"/><TextBlock Text="1" HorizontalAlignment="Right" FontWeight="Bold" Foreground="{StaticResource CyberCriticalBrush}"/></Grid>
+                            <Grid><TextBlock Text="Yüksek" Foreground="{StaticResource CyberTextSecondaryBrush}"/><TextBlock Text="1" HorizontalAlignment="Right" FontWeight="Bold" Foreground="{StaticResource CyberWarningBrush}"/></Grid>
+                            <Grid><TextBlock Text="Orta" Foreground="{StaticResource CyberTextSecondaryBrush}"/><TextBlock Text="1" HorizontalAlignment="Right" FontWeight="Bold" Foreground="#FBBF24"/></Grid>
+                            <Grid><TextBlock Text="Düşük" Foreground="{StaticResource CyberTextSecondaryBrush}"/><TextBlock Text="0" HorizontalAlignment="Right" FontWeight="Bold"/></Grid>
+                            <Grid><TextBlock Text="Güvenli" Foreground="{StaticResource CyberTextSecondaryBrush}"/><TextBlock Text="0" HorizontalAlignment="Right" FontWeight="Bold" Foreground="{StaticResource CyberSafeBrush}"/></Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Quick Summary -->
+                <Border Grid.Column="3" Style="{StaticResource ModernCardStyle}">
+                    <StackPanel Spacing="10">
+                        <TextBlock Text="HIZLI ÖZET" Style="{StaticResource CyberLabelStyle}"/>
+                        <StackPanel Spacing="8">
+                            <Grid><TextBlock Text="Taranan host" Foreground="{StaticResource CyberTextSecondaryBrush}"/><TextBlock Text="12" HorizontalAlignment="Right" FontWeight="SemiBold"/></Grid>
+                            <Grid><TextBlock Text="Açık port" Foreground="{StaticResource CyberTextSecondaryBrush}"/><TextBlock Text="23" HorizontalAlignment="Right" FontWeight="SemiBold"/></Grid>
+                            <Grid><TextBlock Text="Zafiyet" Foreground="{StaticResource CyberTextSecondaryBrush}"/><TextBlock Text="5" HorizontalAlignment="Right" FontWeight="SemiBold" Foreground="{StaticResource CyberCriticalBrush}"/></Grid>
+                            <Grid><TextBlock Text="Son tarama" Foreground="{StaticResource CyberTextSecondaryBrush}"/><TextBlock Text="14:02" HorizontalAlignment="Right" FontWeight="SemiBold"/></Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Info cards row -->
+            <Grid Grid.Row="2" ColumnSpacing="20" RowSpacing="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Style="{StaticResource ModernCardStyle}">
+                    <StackPanel Spacing="8">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <Border Width="36" Height="36" CornerRadius="10" Background="#1A10B981">
+                                <FontIcon Glyph="&#xE768;" FontSize="16" Foreground="{StaticResource CyberSafeBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Text="Hızlı Başlangıç" FontSize="15" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <TextBlock Text="Port Tarama ekranından yetkili hedeflerde temel kontrol çalıştırın." TextWrapping="Wrap" Foreground="{StaticResource CyberTextSecondaryBrush}" LineHeight="20"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="1" Style="{StaticResource ModernCardStyle}">
+                    <StackPanel Spacing="8">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <Border Width="36" Height="36" CornerRadius="10" Background="#1AEF4444">
+                                <FontIcon Glyph="&#xE72E;" FontSize="16" Foreground="{StaticResource CyberCriticalBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Text="Güvenlik" FontSize="15" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <TextBlock Text="Yalnızca izinli sistemlerde test yapın. Etik ve yasal sınırlar içinde kalın." TextWrapping="Wrap" Foreground="{StaticResource CyberTextSecondaryBrush}" LineHeight="20"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="2" Style="{StaticResource ModernCardStyle}">
+                    <StackPanel Spacing="8">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <Border Width="36" Height="36" CornerRadius="10" Background="{StaticResource CyberAccentMutedBrush}">
+                                <FontIcon Glyph="&#xE9F9;" FontSize="16" Foreground="{StaticResource CyberAccentBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Text="Raporlar" FontSize="15" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <TextBlock Text="Tarama oturumları, risk seviyeleri ve çözüm önerileri tek yerde." TextWrapping="Wrap" Foreground="{StaticResource CyberTextSecondaryBrush}" LineHeight="20"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="3" Style="{StaticResource ModernCardStyle}">
+                    <StackPanel Spacing="8">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <Border Width="36" Height="36" CornerRadius="10" Background="#1A3B82F6">
+                                <FontIcon Glyph="&#xE76C;" FontSize="16" Foreground="#60A5FA" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Text="Yol Haritası" FontSize="15" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <TextBlock Text="DPAPI, plugin SDK ve enterprise safe mode yakında." TextWrapping="Wrap" Foreground="{StaticResource CyberTextSecondaryBrush}" LineHeight="20"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Bottom stats -->
+            <Grid Grid.Row="3" ColumnSpacing="16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border Style="{StaticResource ModernCardStyle}" Padding="16">
+                    <StackPanel Spacing="4"><TextBlock Text="Açık Port" Style="{StaticResource CyberLabelStyle}"/><TextBlock Text="23" FontSize="20" FontWeight="Bold"/></StackPanel>
+                </Border>
+                <Border Grid.Column="1" Style="{StaticResource ModernCardStyle}" Padding="16">
+                    <StackPanel Spacing="4"><TextBlock Text="Zafiyet" Style="{StaticResource CyberLabelStyle}"/><TextBlock Text="5" FontSize="20" FontWeight="Bold" Foreground="{StaticResource CyberCriticalBrush}"/></StackPanel>
+                </Border>
+                <Border Grid.Column="2" Style="{StaticResource ModernCardStyle}" Padding="16">
+                    <StackPanel Spacing="4"><TextBlock Text="Riskli Servis" Style="{StaticResource CyberLabelStyle}"/><TextBlock Text="3" FontSize="20" FontWeight="Bold" Foreground="{StaticResource CyberWarningBrush}"/></StackPanel>
+                </Border>
+                <Border Grid.Column="3" Style="{StaticResource ModernCardStyle}" Padding="16">
+                    <StackPanel Spacing="4"><TextBlock Text="Tarama Süresi" Style="{StaticResource CyberLabelStyle}"/><TextBlock Text="12 sn" FontSize="20" FontWeight="Bold"/></StackPanel>
+                </Border>
+                <Border Grid.Column="4" Style="{StaticResource ModernCardStyle}" Padding="16">
+                    <StackPanel Spacing="4"><TextBlock Text="Son Tarama" Style="{StaticResource CyberLabelStyle}"/><TextBlock Text="14:02" FontSize="20" FontWeight="Bold"/></StackPanel>
+                </Border>
+                <Border Grid.Column="5" Style="{StaticResource ModernCardStyle}" Padding="16">
+                    <StackPanel Spacing="4"><TextBlock Text="Motor" Style="{StaticResource CyberLabelStyle}"/><TextBlock Text="Nmap 7.95" FontSize="16" FontWeight="Bold"/></StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
 </Page>

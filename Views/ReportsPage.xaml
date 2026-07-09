@@ -7,12 +7,13 @@
     xmlns:converters="using:CyberTool.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Background="{StaticResource CyberPageBackground}">
 
     <Page.Resources>
     </Page.Resources>
 
-    <Grid Padding="24" RowSpacing="24">
+    <Grid Padding="32" RowSpacing="28">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -20,12 +21,9 @@
 
         <!-- Header -->
         <Grid>
-             <StackPanel Spacing="4">
-                <StackPanel Orientation="Horizontal" Spacing="8">
-                     <FontIcon Glyph="&#xE9F9;" FontSize="24" Foreground="{ThemeResource SystemAccentColorLight2}"/>
-                     <TextBlock Text="Raporlar ve Geçmiş" Style="{StaticResource TitleTextBlockStyle}" />
-                </StackPanel>
-                <TextBlock Text="Geçmiş tarama oturumlarını ve detaylı bulguları inceleyin." Style="{StaticResource BodyTextBlockStyle}" Opacity="0.6" Margin="32,0,0,0"/>
+             <StackPanel Spacing="6">
+                <TextBlock Text="Raporlar ve Geçmiş" Style="{StaticResource PageTitleStyle}"/>
+                <TextBlock Text="Geçmiş tarama oturumlarını ve detaylı bulguları inceleyin." Style="{StaticResource PageSubtitleStyle}"/>
              </StackPanel>
         </Grid>
 
@@ -45,7 +43,7 @@
 
                     <StackPanel Spacing="8">
                         <TextBlock Text="OTURUMLAR" FontSize="11" FontWeight="Bold" Opacity="0.5"/>
-                        <TextBox PlaceholderText="Oturum ara..." CornerRadius="8">
+                        <TextBox PlaceholderText="Oturum ara..." Style="{StaticResource CyberTextBoxStyle}">
                             <TextBox.Header>
                             </TextBox.Header>
                         </TextBox>
@@ -86,7 +84,7 @@
             </Border>
 
             <!-- FINDINGS DETAIL (RIGHT) -->
-            <Border Grid.Column="1" Style="{StaticResource ModernCardStyle}" Background="#08FFFFFF">
+            <Border Grid.Column="1" Style="{StaticResource ModernCardStyle}">
                 <Grid RowSpacing="16">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -128,20 +126,22 @@
                         </Grid.RowDefinitions>
 
                         <!-- Table Header -->
-                        <Grid Margin="0,0,0,12" Background="#10FFFFFF" Padding="12,8" CornerRadius="4">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1.5*" />
-                                <ColumnDefinition Width="0.8*" />
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1.5*" />
-                                <ColumnDefinition Width="4*" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="HEDEF" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
-                            <TextBlock Grid.Column="1" Text="PORT" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
-                            <TextBlock Grid.Column="2" Text="PROTOKOL" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
-                            <TextBlock Grid.Column="3" Text="SERVİS" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
-                            <TextBlock Grid.Column="4" Text="ÖNERİLEN ÇÖZÜM" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
-                        </Grid>
+                        <Border Margin="0,0,0,12" Style="{StaticResource CyberTableHeaderStyle}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1.5*" />
+                                    <ColumnDefinition Width="0.8*" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1.5*" />
+                                    <ColumnDefinition Width="4*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="HEDEF" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                                <TextBlock Grid.Column="1" Text="PORT" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                                <TextBlock Grid.Column="2" Text="PROTOKOL" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                                <TextBlock Grid.Column="3" Text="SERVİS" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                                <TextBlock Grid.Column="4" Text="ÖNERİLEN ÇÖZÜM" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                            </Grid>
+                        </Border>
 
                         <ListView ItemsSource="{Binding SelectedSession.Findings}" SelectionMode="None" Grid.Row="1">
                             <ListView.ItemContainerStyle>

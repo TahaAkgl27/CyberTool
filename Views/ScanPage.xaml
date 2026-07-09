@@ -8,12 +8,13 @@
     xmlns:converters="using:CyberTool.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Background="{StaticResource CyberPageBackground}">
 
     <Page.Resources>
     </Page.Resources>
 
-    <Grid Padding="24" RowSpacing="24">
+    <Grid Padding="32" RowSpacing="28">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" /> <!-- Executive Summary -->
@@ -21,43 +22,40 @@
             <RowDefinition Height="*" />    <!-- Content -->
         </Grid.RowDefinitions>
 
-        <!-- 1. Header Area Cleaned Up -->
-        <Grid>
-             <StackPanel Spacing="4">
-                <StackPanel Orientation="Horizontal" Spacing="8">
-                     <FontIcon Glyph="&#xE774;" FontSize="24" Foreground="{ThemeResource SystemAccentColorLight2}"/>
-                     <TextBlock Text="Port Tarama ve Zafiyet Analizi" Style="{StaticResource TitleTextBlockStyle}" />
-                </StackPanel>
-                <TextBlock Text="Hedef sistemde aktif portları, servisleri ve olası zafiyet risklerini tespit edin." Style="{StaticResource BodyTextBlockStyle}" Opacity="0.6" Margin="32,0,0,0"/>
+        <!-- 1. Header -->
+        <Grid Margin="0,0,0,4">
+             <StackPanel Spacing="6">
+                <TextBlock Text="Port Tarama ve Zafiyet Analizi" Style="{StaticResource PageTitleStyle}"/>
+                <TextBlock Text="Hedef sistemde aktif portları, servisleri ve olası zafiyet risklerini tespit edin." Style="{StaticResource PageSubtitleStyle}"/>
              </StackPanel>
              
-             <!-- Status Badge -->
-             <Border HorizontalAlignment="Right" VerticalAlignment="Top" Background="#15FFFFFF" CornerRadius="16" Padding="12,6">
+             <Border HorizontalAlignment="Right" VerticalAlignment="Top" Background="{StaticResource CyberCardBrush}" BorderBrush="{StaticResource CyberBorderBrush}" BorderThickness="1" CornerRadius="20" Padding="14,8">
                  <StackPanel Orientation="Horizontal" Spacing="8">
-                     <FontIcon Glyph="&#xE9F5;" FontSize="12" Opacity="0.7"/>
-                     <TextBlock Text="{Binding StatusText}" FontSize="12" Opacity="0.9" MaxWidth="300" TextTrimming="CharacterEllipsis"/>
+                     <FontIcon Glyph="&#xE9F5;" FontSize="12" Foreground="{StaticResource CyberTextMutedBrush}"/>
+                     <TextBlock Text="{Binding StatusText}" FontSize="12" Foreground="{StaticResource CyberTextSecondaryBrush}" MaxWidth="300" TextTrimming="CharacterEllipsis"/>
                  </StackPanel>
              </Border>
              
-             <!-- Report Buttons -->
-             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Spacing="8" Margin="0,0,0,0">
-                 <Button Command="{Binding GenerateExecutiveReportCommand}" Style="{StaticResource AccentButtonStyle}" Background="#30E74C3C" BorderBrush="Transparent" CornerRadius="8">
+             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Spacing="10">
+                 <Button Command="{Binding GenerateExecutiveReportCommand}" Style="{StaticResource CyberSecondaryButtonStyle}">
                      <StackPanel Orientation="Horizontal" Spacing="8">
-                         <FontIcon Glyph="&#xE9F9;" Foreground="White"/>
-                         <TextBlock Text="Yönetici Raporu" Foreground="White" FontWeight="Bold"/>
+                         <FontIcon Glyph="&#xE9F9;" FontSize="14"/>
+                         <TextBlock Text="Yönetici Raporu"/>
                      </StackPanel>
                  </Button>
-                 <Button Command="{Binding GenerateTechnicalReportCommand}" Background="#15FFFFFF" BorderBrush="#30FFFFFF" BorderThickness="1" CornerRadius="8">
+                 <Button Command="{Binding GenerateTechnicalReportCommand}" Style="{StaticResource CyberSecondaryButtonStyle}">
                      <StackPanel Orientation="Horizontal" Spacing="8">
-                         <FontIcon Glyph="&#xE9F9;" Opacity="0.8"/>
-                         <TextBlock Text="Teknik Rapor" Opacity="0.8"/>
+                         <FontIcon Glyph="&#xE8A5;" FontSize="14"/>
+                         <TextBlock Text="Teknik Rapor"/>
                      </StackPanel>
                  </Button>
+                 <Button Style="{StaticResource CyberIconButtonStyle}"><FontIcon Glyph="&#xEA8F;" FontSize="14"/></Button>
+                 <Button Style="{StaticResource CyberIconButtonStyle}"><FontIcon Glyph="&#xE713;" FontSize="14"/></Button>
              </StackPanel>
         </Grid>
 
         <!-- 2. LIVE SECURITY DASHBOARD -->
-        <Border Grid.Row="1" Style="{StaticResource ModernCardStyle}" Background="#0DFFFFFF" BorderBrush="#20FFFFFF" BorderThickness="1" Margin="0,0,0,24" Visibility="{Binding RiskScore, Converter={StaticResource IntToVisibilityConverter}}">
+        <Border Grid.Row="1" Style="{StaticResource HeroCardStyle}" Margin="0,0,0,8" Visibility="{Binding RiskScore, Converter={StaticResource IntToVisibilityConverter}}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"/> <!-- AI Summary & Score -->
@@ -168,9 +166,9 @@
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
                         
-                        <TextBox Header="Hedef IP / Host" Text="{Binding Target, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="örn: scanme.nmap.org" CornerRadius="4" Height="Auto" Padding="10,8"/>
-                        <NumberBox Grid.Column="1" Header="Başlangıç" Value="{Binding PortFrom, Mode=TwoWay}" Minimum="1" Maximum="65535" SpinButtonPlacementMode="Compact" CornerRadius="4"/>
-                        <NumberBox Grid.Column="2" Header="Bitiş" Value="{Binding PortTo, Mode=TwoWay}" Minimum="1" Maximum="65535" SpinButtonPlacementMode="Compact" CornerRadius="4"/>
+                        <TextBox Header="Hedef IP / Host" Text="{Binding Target, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="örn: 192.168.100.10" Style="{StaticResource CyberTextBoxStyle}" Height="Auto"/>
+                        <NumberBox Grid.Column="1" Header="Başlangıç" Value="{Binding PortFrom, Mode=TwoWay}" Minimum="1" Maximum="65535" SpinButtonPlacementMode="Compact" Style="{StaticResource CyberNumberBoxStyle}"/>
+                        <NumberBox Grid.Column="2" Header="Bitiş" Value="{Binding PortTo, Mode=TwoWay}" Minimum="1" Maximum="65535" SpinButtonPlacementMode="Compact" Style="{StaticResource CyberNumberBoxStyle}"/>
                     </Grid>
 
                     <Grid ColumnSpacing="12">
@@ -181,21 +179,21 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         
-                        <Button Style="{StaticResource AccentButtonStyle}" Command="{Binding StartCommand}" Padding="32,10" CornerRadius="8">
+                        <Button Style="{StaticResource CyberPrimaryButtonStyle}" Command="{Binding StartCommand}" Padding="32,12">
                             <StackPanel Orientation="Horizontal" Spacing="10">
                                 <FontIcon Glyph="&#xE768;" FontSize="16"/>
                                 <TextBlock Text="Taramayı Başlat" FontWeight="SemiBold"/>
                             </StackPanel>
                         </Button>
                         
-                         <Button Grid.Column="1" Command="{Binding CancelCommand}" Padding="20,10" CornerRadius="8" BorderThickness="1">
+                         <Button Grid.Column="1" Command="{Binding CancelCommand}" Style="{StaticResource CyberSecondaryButtonStyle}" Padding="20,12">
                             <StackPanel Orientation="Horizontal" Spacing="8">
                                 <FontIcon Glyph="&#xE711;" FontSize="16"/>
                                 <TextBlock Text="Durdur"/>
                             </StackPanel>
                         </Button>
 
-                        <Button Grid.Column="3" Click="ImportNmapXml_Click" Padding="16,10" CornerRadius="8" Background="Transparent" BorderThickness="1" BorderBrush="#20FFFFFF">
+                        <Button Grid.Column="3" Click="ImportNmapXml_Click" Style="{StaticResource CyberSecondaryButtonStyle}" Padding="16,12">
                              <StackPanel Orientation="Horizontal" Spacing="8">
                                 <FontIcon Glyph="&#xE8B5;" FontSize="16" Opacity="0.7"/>
                                 <TextBlock Text="Nmap XML Yükle" Opacity="0.8"/>
@@ -256,36 +254,34 @@
                     </Grid.RowDefinitions>
                     
                     <!-- Modern Table Design -->
-                    <Grid Grid.Row="0" Margin="0,0,0,8" Padding="16,12" Background="#15FFFFFF" CornerRadius="8">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1.5*" />
-                            <ColumnDefinition Width="0.8*" />
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1.4*" /> <!-- New: Verification -->
-                            <ColumnDefinition Width="1.2*" />
-                            <ColumnDefinition Width="1.2*" />
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1.2*" />
-                            <ColumnDefinition Width="2.5*" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="HEDEF" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
-                        <TextBlock Grid.Column="1" Text="PORT" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
-                        <TextBlock Grid.Column="2" Text="SERVİS" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
-                        <TextBlock Grid.Column="3" Text="DOĞRULAMA" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
-                        <TextBlock Grid.Column="4" Text="ERİŞİM" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
-                        <TextBlock Grid.Column="5" Text="GÖRÜLME" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
-                        <TextBlock Grid.Column="6" Text="SORUMLU" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
-                        <TextBlock Grid.Column="7" Text="RİSK" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
-                        <TextBlock Grid.Column="8" Text="ÖNERİLEN AKSİYON" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
-                    </Grid>
+                    <Border Grid.Row="0" Margin="0,0,0,8" Style="{StaticResource CyberTableHeaderStyle}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1.5*" />
+                                <ColumnDefinition Width="0.8*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1.4*" />
+                                <ColumnDefinition Width="1.2*" />
+                                <ColumnDefinition Width="1.2*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1.2*" />
+                                <ColumnDefinition Width="2.5*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="HEDEF" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                            <TextBlock Grid.Column="1" Text="PORT" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                            <TextBlock Grid.Column="2" Text="SERVİS" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                            <TextBlock Grid.Column="3" Text="DOĞRULAMA" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                            <TextBlock Grid.Column="4" Text="ERİŞİM" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                            <TextBlock Grid.Column="5" Text="GÖRÜLME" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                            <TextBlock Grid.Column="6" Text="SORUMLU" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                            <TextBlock Grid.Column="7" Text="RİSK" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                            <TextBlock Grid.Column="8" Text="ÖNERİLEN AKSİYON" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                        </Grid>
+                    </Border>
 
                     <ListView x:Name="ResultsListView" Grid.Row="1" ItemsSource="{Binding Results}" SelectionMode="Single" Tag="{x:Bind ViewModel}">
                         <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                <Setter Property="Margin" Value="0,2"/>
-                                <Setter Property="Padding" Value="8,4"/>
-                            </Style>
+                            <Style TargetType="ListViewItem" BasedOn="{StaticResource CyberListItemStyle}"/>
                         </ListView.ItemContainerStyle>
                         <ListView.ItemTemplate>
                             <DataTemplate>
@@ -380,7 +376,7 @@
                     <StackPanel Spacing="20">
                         <!-- AI Simulation Control -->
                         <!-- 1. AI Recommendation Card -->
-                        <Border Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" CornerRadius="12" Padding="20" BorderBrush="#20FFFFFF" BorderThickness="1">
+                        <Border Background="{StaticResource CyberCardBrush}" CornerRadius="18" Padding="20" BorderBrush="{StaticResource CyberBorderBrush}" BorderThickness="1">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                      <ColumnDefinition Width="Auto"/>
@@ -399,7 +395,7 @@
                         <!-- 2. Visual Attack Graph -->
                         <TextBlock Text="Saldırı Zinciri Görselleştirmesi" Style="{StaticResource SectionHeaderStyle}" Opacity="0.9" FontSize="18"/>
                         
-                        <Border Background="#08FFFFFF" CornerRadius="12" Height="500" Padding="0">
+                        <Border Background="{StaticResource CyberCardBrush}" CornerRadius="18" Height="500" Padding="0" BorderBrush="{StaticResource CyberBorderBrush}" BorderThickness="1">
                              <Grid>
                                  <!-- Canvas for Nodes and Links -->
                                  <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -428,7 +424,7 @@
                                          </ItemsControl.ItemsPanel>
                                          <ItemsControl.ItemTemplate>
                                              <DataTemplate>
-                                                 <Border Background="{Binding Color, Converter={StaticResource HexToBrushConverter}}" Width="200" CornerRadius="8" Padding="12" BorderBrush="#30FFFFFF" BorderThickness="1">
+                                                 <Border Background="{Binding Color, Converter={StaticResource HexToBrushConverter}}" Width="200" CornerRadius="14" Padding="14" BorderBrush="{StaticResource CyberBorderBrush}" BorderThickness="1">
                                                       <Border.RenderTransform>
                                                           <TranslateTransform X="{Binding X}" Y="{Binding Y}"/>
                                                       </Border.RenderTransform>
@@ -453,7 +449,7 @@
                                  </Canvas>
                                  
                                  <!-- Overlay Stats (Top Right) -->
-                                 <Border HorizontalAlignment="Right" VerticalAlignment="Top" Margin="24" Background="#20E74C3C" CornerRadius="20" Padding="16,6">
+                                 <Border HorizontalAlignment="Right" VerticalAlignment="Top" Margin="24" Background="#1AEF4444" CornerRadius="20" Padding="16,8" BorderBrush="{StaticResource CyberCriticalBrush}" BorderThickness="1">
                                      <StackPanel Orientation="Horizontal" Spacing="8">
                                          <FontIcon Glyph="&#xE786;" FontSize="14" Foreground="#E74C3C"/> 
                                          <TextBlock FontWeight="Bold" Foreground="#E74C3C" FontSize="14">

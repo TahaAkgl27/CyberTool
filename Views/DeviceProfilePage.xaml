@@ -8,7 +8,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converters="using:CyberTool.Converters"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Background="{StaticResource CyberPageBackground}">
 
     <Page.Resources>
         <vm:DeviceViewModel x:Key="ViewModel"/>
@@ -16,29 +17,28 @@
     </Page.Resources>
 
     <ScrollViewer DataContext="{StaticResource ViewModel}">
-        <StackPanel Padding="24" Spacing="24">
+        <StackPanel Padding="32" Spacing="28">
             
-            <!-- 1. HERO HEADER -->
+            <!-- HERO HEADER -->
             <Grid>
                 <StackPanel Spacing="8">
                     <StackPanel Orientation="Horizontal" Spacing="12">
-                        <FontIcon Glyph="&#xE950;" FontSize="28" Foreground="{ThemeResource SystemAccentColor}"/>
-                        <TextBlock Text="{Binding Profile.DeviceName}" FontSize="28" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding Profile.IpAddress}" FontSize="20" Opacity="0.5" VerticalAlignment="Bottom" Margin="4,0,0,2"/>
+                        <TextBlock Text="{Binding Profile.DeviceName}" Style="{StaticResource PageTitleStyle}"/>
+                        <TextBlock Text="{Binding Profile.IpAddress}" FontSize="18" Foreground="{StaticResource CyberTextMutedBrush}" VerticalAlignment="Bottom" Margin="0,0,0,4"/>
                     </StackPanel>
                     
                     <StackPanel Orientation="Horizontal" Spacing="12">
-                        <Border Background="#15FFFFFF" CornerRadius="16" Padding="12,4">
-                            <TextBlock Text="{Binding Profile.Status}" FontWeight="SemiBold"/>
+                        <Border Style="{StaticResource CyberBadgeStyle}">
+                            <TextBlock Text="{Binding Profile.Status}" FontWeight="SemiBold" FontSize="12"/>
                         </Border>
-                        <TextBlock Text="Son Görülme:" Opacity="0.5" VerticalAlignment="Center"/>
-                        <TextBlock Text="{Binding Profile.LastSeen, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:dd.MM.yyyy HH:mm}'}" Opacity="0.8" VerticalAlignment="Center"/>
+                        <TextBlock Text="Son Görülme:" Foreground="{StaticResource CyberTextMutedBrush}" VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding Profile.LastSeen, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:dd.MM.yyyy HH:mm}'}" Foreground="{StaticResource CyberTextSecondaryBrush}" VerticalAlignment="Center"/>
                     </StackPanel>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="12" VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10" VerticalAlignment="Center">
                     <!-- Deep Scan Login Area -->
-                    <Button Content="🔒 Giriş Yap &amp; Doğrula" Style="{StaticResource AccentButtonStyle}" Background="#3498DB">
+                    <Button Content="Giriş Yap &amp; Doğrula" Style="{StaticResource CyberPrimaryButtonStyle}">
                         <Button.Flyout>
                             <Flyout>
                                 <StackPanel Spacing="12" Width="240">
@@ -48,16 +48,16 @@
                                     <TextBox Header="Kullanıcı Adı" PlaceholderText="örn: Administrator" Text="{Binding DeepScanUsername, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <PasswordBox Header="Parola" Password="{Binding DeepScanPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     
-                                    <Button Content="Analizi Başlat" Command="{Binding RunDeepScanCommand}" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}"/>
+                                    <Button Content="Analizi Başlat" Command="{Binding RunDeepScanCommand}" HorizontalAlignment="Stretch" Style="{StaticResource CyberPrimaryButtonStyle}"/>
                                     <ProgressBar IsIndeterminate="True" Visibility="{Binding IsDeepScanning, Converter={StaticResource BoolToVisibilityConverter}}" Height="2"/>
                                 </StackPanel>
                             </Flyout>
                         </Button.Flyout>
                     </Button>
                     
-                    <Button Content="Yönetici Özeti (PDF)" Style="{StaticResource AccentButtonStyle}" Background="#30E74C3C"/> 
-                    <Button Content="Teknik Detay (CSV)"/>
-                    <Button Content="Kontrol Listesi"/>
+                    <Button Content="Yönetici Özeti (PDF)" Style="{StaticResource CyberSecondaryButtonStyle}"/> 
+                    <Button Content="Teknik Detay (CSV)" Style="{StaticResource CyberSecondaryButtonStyle}"/>
+                    <Button Content="Kontrol Listesi" Style="{StaticResource CyberSecondaryButtonStyle}"/>
                 </StackPanel>
             </Grid>
 

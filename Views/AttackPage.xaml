@@ -7,121 +7,99 @@
     xmlns:vm="using:CyberTool.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Background="{StaticResource CyberPageBackground}">
 
     <Page.DataContext>
         <vm:AttackViewModel/>
     </Page.DataContext>
 
-    <Grid Padding="24" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Padding="32">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/> <!-- Header -->
-            <RowDefinition Height="Auto"/> <!-- Status & Warning -->
-            <RowDefinition Height="Auto"/> <!-- Controls -->
-            <RowDefinition Height="*"/>    <!-- Console / Results -->
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Header -->
-        <StackPanel Grid.Row="0" Margin="0,0,0,24">
-            <TextBlock Text="⚔️ ACTIVE ATTACK MODULE" FontSize="32" FontWeight="Bold" Foreground="#E74C3C" CharacterSpacing="100"/>
-            <TextBlock Text="AUTHORIZED USE ONLY // RESTRICTED ACCESS" Foreground="#E74C3C" Opacity="0.6" FontSize="12" CharacterSpacing="100"/>
+        <StackPanel Grid.Row="0" Margin="0,0,0,24" Spacing="6">
+            <TextBlock Text="Saldırı Modülü" Style="{StaticResource PageTitleStyle}"/>
+            <TextBlock Text="AUTHORIZED USE ONLY — Yalnızca yazılı izinli ortamlarda kullanın." Style="{StaticResource PageSubtitleStyle}" Foreground="{StaticResource CyberCriticalBrush}"/>
         </StackPanel>
 
-        <!-- Status Warning Banner -->
-        <Border Grid.Row="1" Background="#20E74C3C" BorderBrush="#E74C3C" BorderThickness="1,0,0,0" Padding="16,12" Margin="0,0,0,24" CornerRadius="4">
+        <Border Grid.Row="1" Background="#1AEF4444" BorderBrush="{StaticResource CyberCriticalBrush}" BorderThickness="1" Padding="16,12" Margin="0,0,0,24" CornerRadius="14">
             <StackPanel Orientation="Horizontal" Spacing="12">
-                <FontIcon Glyph="&#xE7BA;" Foreground="#E74C3C"/>
-                <TextBlock Text="WARNING: Use only on authorized systems. All actions are logged." Foreground="#E74C3C" FontWeight="SemiBold"/>
+                <FontIcon Glyph="&#xE7BA;" Foreground="{StaticResource CyberCriticalBrush}"/>
+                <TextBlock Text="WARNING: Use only on authorized systems. All actions are logged." Foreground="{StaticResource CyberCriticalBrush}" FontWeight="SemiBold"/>
             </StackPanel>
         </Border>
 
-        <!-- Main Controls Area -->
         <Grid Grid.Row="2" ColumnSpacing="24" Margin="0,0,0,24">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/> 
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Input Panel -->
-            <StackPanel Spacing="16">
-                <Border Background="#10FFFFFF" CornerRadius="4" Padding="12">
-                     <StackPanel Spacing="12">
-                         <TextBlock Text="TARGET PROFILE (Smart Attack)" Opacity="0.6" FontSize="12" FontWeight="Bold"/>
-                         <Grid ColumnSpacing="12">
-                             <Grid.ColumnDefinitions>
-                                 <ColumnDefinition Width="*"/>
-                                 <ColumnDefinition Width="*"/>
-                             </Grid.ColumnDefinitions>
-                             <TextBox Header="NAME" Text="{Binding TargetName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="e.g. John"/>
-                             <TextBox Grid.Column="1" Header="SURNAME" Text="{Binding TargetSurname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="e.g. Doe"/>
-                         </Grid>
-                     </StackPanel>
-                </Border>
+            <Border Style="{StaticResource ModernCardStyle}">
+                <StackPanel Spacing="16">
+                    <TextBlock Text="TARGET PROFILE" Style="{StaticResource CyberLabelStyle}"/>
+                    <Grid ColumnSpacing="12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Header="NAME" Text="{Binding TargetName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="John" Style="{StaticResource CyberTextBoxStyle}"/>
+                        <TextBox Grid.Column="1" Header="SURNAME" Text="{Binding TargetSurname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="Doe" Style="{StaticResource CyberTextBoxStyle}"/>
+                    </Grid>
+                    <TextBox Header="TARGET IP ADDRESS" Text="{Binding TargetIp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="192.168.100.10" FontFamily="Consolas" Style="{StaticResource CyberTextBoxStyle}"/>
+                    <ComboBox Header="ATTACK VECTOR" SelectedIndex="0" HorizontalAlignment="Stretch" CornerRadius="10">
+                        <ComboBoxItem Content="SMB BRUTE-FORCE (WMI)"/>
+                        <ComboBoxItem Content="RDP SPRAY (Coming Soon)" IsEnabled="False"/>
+                        <ComboBoxItem Content="SSH DICTIONARY (Coming Soon)" IsEnabled="False"/>
+                    </ComboBox>
+                    <Grid Margin="0,8,0,0">
+                        <Button Command="{Binding StartAttackCommand}" Background="{StaticResource CyberCriticalBrush}" Foreground="White" HorizontalAlignment="Stretch" Height="48" CornerRadius="12" Visibility="{Binding IsRunning, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Inverse}">
+                            <StackPanel Orientation="Horizontal" Spacing="12">
+                                <FontIcon Glyph="&#xE768;" FontSize="18"/>
+                                <TextBlock Text="INITIATE SEQUENCE" FontWeight="Bold" FontSize="16"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Command="{Binding StopAttackCommand}" Background="#991B1B" Foreground="White" HorizontalAlignment="Stretch" Height="48" CornerRadius="12" Visibility="{Binding IsRunning, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <StackPanel Orientation="Horizontal" Spacing="12">
+                                <FontIcon Glyph="&#xE71A;" FontSize="18"/>
+                                <TextBlock Text="ABORT OPERATION" FontWeight="Bold" FontSize="16"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+            </Border>
 
-                <TextBox Header="TARGET IP ADDRESS" Text="{Binding TargetIp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                         PlaceholderText="e.g. 192.168.1.10" FontFamily="Consolas" FontSize="16"/>
-                
-                <ComboBox Header="ATTACK VECTOR" SelectedIndex="0" HorizontalAlignment="Stretch">
-                    <ComboBoxItem Content="SMB BRUTE-FORCE (WMI)"/>
-                    <ComboBoxItem Content="RDP SPRAY (Coming Soon)" IsEnabled="False"/>
-                    <ComboBoxItem Content="SSH DICTIONARY (Coming Soon)" IsEnabled="False"/>
-                </ComboBox>
-
-                <Grid Margin="0,12,0,0">
-                    <Button Command="{Binding StartAttackCommand}" Background="#E74C3C" Foreground="White" 
-                            HorizontalAlignment="Stretch" Height="48" CornerRadius="4"
-                            Visibility="{Binding IsRunning, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Inverse}">
-                        <StackPanel Orientation="Horizontal" Spacing="12">
-                            <FontIcon Glyph="&#xE768;" FontSize="18"/>
-                            <TextBlock Text="INITIATE SEQUENCE" FontWeight="Bold" FontSize="16"/>
-                        </StackPanel>
-                    </Button>
-
-                    <Button Command="{Binding StopAttackCommand}" Background="#8B0000" Foreground="White" 
-                            HorizontalAlignment="Stretch" Height="48" CornerRadius="4"
-                            Visibility="{Binding IsRunning, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <StackPanel Orientation="Horizontal" Spacing="12">
-                            <FontIcon Glyph="&#xE71A;" FontSize="18"/>
-                            <TextBlock Text="ABORT OPERATION" FontWeight="Bold" FontSize="16"/>
-                        </StackPanel>
-                    </Button>
-                </Grid>
-            </StackPanel>
-
-            <!-- Status / Loot Display -->
-            <Border Grid.Column="1" Background="#10FFFFFF" CornerRadius="8" Padding="16">
+            <Border Grid.Column="1" Style="{StaticResource ModernCardStyle}">
                 <StackPanel Spacing="8">
-                    <TextBlock Text="OPERATION STATUS" Opacity="0.5" FontSize="12"/>
+                    <TextBlock Text="OPERATION STATUS" Style="{StaticResource CyberLabelStyle}"/>
                     <Grid>
-                        <TextBlock Text="IDLE" Foreground="Gray" FontWeight="Bold" FontSize="24" 
-                                   Visibility="{Binding IsRunning, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Inverse}"/>
-                        <StackPanel Orientation="Horizontal" Spacing="8" 
-                                    Visibility="{Binding IsRunning, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <ProgressRing IsActive="True" Width="20" Height="20" Foreground="#E74C3C"/>
-                            <TextBlock Text="EXECUTING..." Foreground="#E74C3C" FontWeight="Bold" FontSize="24"/>
+                        <TextBlock Text="IDLE" Foreground="{StaticResource CyberTextMutedBrush}" FontWeight="Bold" FontSize="24" Visibility="{Binding IsRunning, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Inverse}"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8" Visibility="{Binding IsRunning, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <ProgressRing IsActive="True" Width="20" Height="20" Foreground="{StaticResource CyberCriticalBrush}"/>
+                            <TextBlock Text="EXECUTING..." Foreground="{StaticResource CyberCriticalBrush}" FontWeight="Bold" FontSize="24"/>
                         </StackPanel>
                     </Grid>
-
-                    <Rectangle Height="1" Fill="White" Opacity="0.1" Margin="0,12"/>
-
-                    <TextBlock Text="CRACKED CREDENTIALS" Opacity="0.5" FontSize="12"/>
-                    <TextBlock Text="{Binding CrackedCredentials}" FontFamily="Consolas" FontSize="20" Foreground="#2ECC71" FontWeight="Bold" TextWrapping="Wrap"/>
+                    <Rectangle Height="1" Fill="{StaticResource CyberBorderBrush}" Margin="0,12"/>
+                    <TextBlock Text="CRACKED CREDENTIALS" Style="{StaticResource CyberLabelStyle}"/>
+                    <TextBlock Text="{Binding CrackedCredentials}" FontFamily="Consolas" FontSize="20" Foreground="{StaticResource CyberSafeBrush}" FontWeight="Bold" TextWrapping="Wrap"/>
                 </StackPanel>
             </Border>
         </Grid>
 
-        <!-- Terminal Output -->
         <Grid Grid.Row="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            
-            <TextBlock Text="LIVE TERMINAL OUTPUT" Margin="0,0,0,8" Opacity="0.6" FontWeight="SemiBold" FontFamily="Consolas"/>
-            
-            <Border Grid.Row="1" Background="#0C0C0C" BorderBrush="#33FFFFFF" BorderThickness="1" CornerRadius="4" Padding="12">
+            <TextBlock Text="LIVE TERMINAL OUTPUT" Style="{StaticResource CyberLabelStyle}" Margin="0,0,0,8"/>
+            <Border Grid.Row="1" Background="#0A0C10" BorderBrush="{StaticResource CyberBorderBrush}" BorderThickness="1" CornerRadius="14" Padding="16">
                  <ScrollViewer>
-                     <TextBlock Text="{Binding ConsoleOutput}" FontFamily="Consolas" FontSize="14" Foreground="#00FF00" TextWrapping="Wrap"/>
+                     <TextBlock Text="{Binding ConsoleOutput}" FontFamily="Consolas" FontSize="14" Foreground="#22C55E" TextWrapping="Wrap"/>
                  </ScrollViewer>
             </Border>
         </Grid>

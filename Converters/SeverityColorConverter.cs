@@ -31,11 +31,11 @@ public class SeverityColorConverter : IValueConverter
                      var severity = value as string ?? "Info";
                      return new SolidColorBrush(severity switch
                      {
-                        "Critical" or "🔴 Kritik" => Color.FromArgb(255, 139, 0, 0),
-                        "High" or "High" or "Yüksek" => Color.FromArgb(255, 128, 64, 0),
-                        "Medium" or "Orta" or "🟠 Orta" => Color.FromArgb(255, 102, 82, 0),
-                        "Low" or "Low" or "Düşük" or "🟢 Düşük" => Color.FromArgb(255, 0, 77, 0),
-                        _ => Color.FromArgb(255, 64, 64, 64)
+                        "Critical" or "🔴 Kritik" => Color.FromArgb(255, 239, 68, 68),
+                        "High" or "Yüksek" => Color.FromArgb(255, 245, 158, 11),
+                        "Medium" or "Orta" or "🟠 Orta" => Color.FromArgb(255, 251, 191, 36),
+                        "Low" or "Düşük" or "🟢 Düşük" => Color.FromArgb(255, 16, 185, 129),
+                        _ => Color.FromArgb(255, 156, 163, 175)
                      });
                 }
             }

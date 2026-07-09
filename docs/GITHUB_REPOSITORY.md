@@ -12,6 +12,8 @@ Recommendations for presenting CyberTool as a professional open source project o
 Open-source Windows cybersecurity & IT diagnostics toolkit. Network scanning, WMI enumeration, risk assessment, optional AI analysis. Authorized use only. WinUI 3 / .NET 8.
 ```
 
+**Apply in:** GitHub → Settings → General → Description
+
 ---
 
 ## Homepage
@@ -23,6 +25,8 @@ https://github.com/TahaAkgl27/CyberTool#readme
 ```
 
 When a project website exists, update to `https://TahaAkgl27.github.io/CyberTool/` or dedicated domain.
+
+**Apply in:** GitHub → Settings → General → Website
 
 ---
 

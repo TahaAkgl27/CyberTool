@@ -32,5 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Publisher and branding normalized to **CyberTool** for open source release
+- Premium dark UI refresh (WinUI 3) for dashboard, scan, reports, settings, and related pages
+- README updated with v1.0.0 screenshot and release badges
 
 [1.0.0]: https://github.com/TahaAkgl27/CyberTool/releases/tag/v1.0.0

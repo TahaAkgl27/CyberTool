@@ -13,65 +13,121 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <Grid>
+    <Grid Background="{StaticResource CyberPageBackground}">
 
         <NavigationView x:Name="AppNav"
                         IsBackButtonVisible="Collapsed"
                         IsSettingsVisible="False"
-                        PaneDisplayMode="LeftCompact"
+                        PaneDisplayMode="Left"
+                        OpenPaneLength="250"
+                        CompactPaneLength="52"
                         IsPaneToggleButtonVisible="True"
+                        Background="{StaticResource CyberPageBackground}"
                         SelectionChanged="AppNav_SelectionChanged">
 
+            <NavigationView.Resources>
+                <SolidColorBrush x:Key="NavigationViewDefaultPaneBackground" Color="#12151C"/>
+                <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="#12151C"/>
+                <SolidColorBrush x:Key="NavigationViewTopPaneBackground" Color="#12151C"/>
+                <SolidColorBrush x:Key="NavigationViewContentBackground" Color="#0F1117"/>
+                <SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground" Color="#8B5CF6"/>
+            </NavigationView.Resources>
+
+            <NavigationView.PaneHeader>
+                <StackPanel Margin="16,20,16,8" Spacing="4">
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <Border Width="40" Height="40" CornerRadius="12" Background="{StaticResource CyberAccentMutedBrush}" BorderBrush="{StaticResource CyberAccentBrush}" BorderThickness="1">
+                            <FontIcon Glyph="&#xE72E;" FontSize="18" Foreground="{StaticResource CyberAccentBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel VerticalAlignment="Center" Spacing="2">
+                            <TextBlock Text="CYBERTOOL" FontSize="15" FontWeight="Bold" Foreground="{StaticResource CyberTextPrimaryBrush}" CharacterSpacing="120"/>
+                            <TextBlock Text="v1.0.0" FontSize="11" Foreground="{StaticResource CyberTextMutedBrush}"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <Rectangle Height="1" Fill="{StaticResource CyberBorderSubtleBrush}" Margin="0,12,0,0"/>
+                </StackPanel>
+            </NavigationView.PaneHeader>
+
             <NavigationView.MenuItems>
-                <NavigationViewItem Content="Genel Bakış" Tag="dashboard">
+                <NavigationViewItem Content="Dashboard" Tag="dashboard">
                     <NavigationViewItem.Icon>
-                        <SymbolIcon Symbol="Home" />
+                        <FontIcon Glyph="&#xE80F;" FontSize="16"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
                 <NavigationViewItem Content="Cihaz Profili" Tag="device">
                     <NavigationViewItem.Icon>
-                        <SymbolIcon Symbol="ContactInfo" />
+                        <FontIcon Glyph="&#xE950;" FontSize="16"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
-                <NavigationViewItem Content="Tarama" Tag="scan">
+                <NavigationViewItem Content="Port Tarama" Tag="scan">
                     <NavigationViewItem.Icon>
-                        <SymbolIcon Symbol="Find" />
+                        <FontIcon Glyph="&#xE71B;" FontSize="16"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
                 <NavigationViewItem Content="Raporlar" Tag="reports">
                     <NavigationViewItem.Icon>
-                        <SymbolIcon Symbol="Document" />
+                        <FontIcon Glyph="&#xE9F9;" FontSize="16"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
-
-
-                <NavigationViewItem Content="Saldırı Modülü" Tag="attack">
+                <NavigationViewItem Content="Saldırı Zinciri" Tag="attack">
                     <NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xE74C;" />
+                        <FontIcon Glyph="&#xE74C;" FontSize="16"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
                 <NavigationViewItem Content="Fidye Analizi" Tag="ransomware">
                     <NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xE9ca;" FontFamily="Segoe MDL2 Assets"/>
+                        <FontIcon Glyph="&#xE9CA;" FontSize="16"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
 
             <NavigationView.FooterMenuItems>
-
                 <NavigationViewItem Content="Ayarlar" Tag="settings">
                     <NavigationViewItem.Icon>
-                        <SymbolIcon Symbol="Setting" />
+                        <FontIcon Glyph="&#xE713;" FontSize="16"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.FooterMenuItems>
 
-            <Frame x:Name="ContentFrame" />
+            <NavigationView.PaneFooter>
+                <StackPanel Margin="12,0,12,16" Spacing="12">
+                    <Rectangle Height="1" Fill="{StaticResource CyberBorderSubtleBrush}"/>
+
+                    <Border Background="{StaticResource CyberCardBrush}" BorderBrush="{StaticResource CyberBorderBrush}" BorderThickness="1" CornerRadius="14" Padding="14">
+                        <StackPanel Spacing="6">
+                            <TextBlock Text="PROJE DURUMU" Style="{StaticResource CyberLabelStyle}"/>
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <Ellipse Width="8" Height="8" Fill="{StaticResource CyberSafeBrush}"/>
+                                <TextBlock Text="Aktif" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource CyberTextPrimaryBrush}"/>
+                            </StackPanel>
+                            <TextBlock Text="v1.0.0" FontSize="11" Foreground="{StaticResource CyberTextMutedBrush}"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="{StaticResource CyberCardBrush}" BorderBrush="{StaticResource CyberBorderBrush}" BorderThickness="1" CornerRadius="14" Padding="12">
+                        <Grid ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Width="36" Height="36" CornerRadius="18" Background="{StaticResource CyberAccentMutedBrush}">
+                                <TextBlock Text="TA" FontSize="12" FontWeight="Bold" Foreground="{StaticResource CyberAccentBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="1">
+                                <TextBlock Text="Administrator" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource CyberTextPrimaryBrush}"/>
+                                <TextBlock Text="Yerel oturum" FontSize="11" Foreground="{StaticResource CyberTextMutedBrush}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </StackPanel>
+            </NavigationView.PaneFooter>
+
+            <Frame x:Name="ContentFrame" Background="{StaticResource CyberPageBackground}" />
         </NavigationView>
     </Grid>
 </Window>
