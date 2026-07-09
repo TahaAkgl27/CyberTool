@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "CyberTool (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "CyberTool (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

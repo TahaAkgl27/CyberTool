@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="CyberTool.Views.ReportsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CyberTool.Views"
+    xmlns:converters="using:CyberTool.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+    </Page.Resources>
+
+    <Grid Padding="24" RowSpacing="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Grid>
+             <StackPanel Spacing="4">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                     <FontIcon Glyph="&#xE9F9;" FontSize="24" Foreground="{ThemeResource SystemAccentColorLight2}"/>
+                     <TextBlock Text="Raporlar ve Geçmiş" Style="{StaticResource TitleTextBlockStyle}" />
+                </StackPanel>
+                <TextBlock Text="Geçmiş tarama oturumlarını ve detaylı bulguları inceleyin." Style="{StaticResource BodyTextBlockStyle}" Opacity="0.6" Margin="32,0,0,0"/>
+             </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="1" ColumnSpacing="24">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="350"/>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- SESSIONS LIST (LEFT) -->
+            <Border Style="{StaticResource ModernCardStyle}">
+                <Grid RowSpacing="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="OTURUMLAR" FontSize="11" FontWeight="Bold" Opacity="0.5"/>
+                        <TextBox PlaceholderText="Oturum ara..." CornerRadius="8">
+                            <TextBox.Header>
+                            </TextBox.Header>
+                        </TextBox>
+                    </StackPanel>
+
+                    <ListView Grid.Row="1" ItemsSource="{Binding Sessions}" SelectedItem="{Binding SelectedSession, Mode=TwoWay}" SelectionMode="Single">
+                        <ListView.ItemContainerStyle>
+                             <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="Margin" Value="0,4"/>
+                                <Setter Property="CornerRadius" Value="8"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="12" Background="Transparent" ColumnSpacing="12">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <Border Background="#10FFFFFF" Width="40" Height="40" CornerRadius="8" VerticalAlignment="Center">
+                                        <FontIcon Glyph="&#xE916;" FontSize="20" Opacity="0.8"/>
+                                    </Border>
+                                    
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Target}" FontWeight="SemiBold" FontSize="14"/>
+                                        <TextBlock Text="{Binding StartedAt}" Opacity="0.5" FontSize="11"/>
+                                    </StackPanel>
+                                    
+                                    <FontIcon Grid.Column="2" Glyph="&#xE76C;" FontSize="12" Opacity="0.3"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Border>
+
+            <!-- FINDINGS DETAIL (RIGHT) -->
+            <Border Grid.Column="1" Style="{StaticResource ModernCardStyle}" Background="#08FFFFFF">
+                <Grid RowSpacing="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Detail Header -->
+                    <Grid>
+                        <StackPanel>
+                            <TextBlock Text="TARAMA DETAYLARI" FontSize="11" FontWeight="Bold" Opacity="0.5"/>
+                            <TextBlock Text="{Binding SelectedSession.Target, FallbackValue='Oturum Seçilmedi'}" FontSize="24" FontWeight="Bold" Margin="0,4,0,0"/>
+                            <TextBlock Text="{Binding SelectedSession.Findings.Count, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}Toplam {0} bulgu tespit edildi.'}" Opacity="0.6" Margin="0,4,0,0"/>
+                        </StackPanel>
+                        
+                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Spacing="8">
+                            <Button Height="32" CornerRadius="4">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <FontIcon Glyph="&#xE7F1;" />
+                                    <TextBlock Text="CSV İndir" />
+                                </StackPanel>
+                            </Button>
+                             <Button Style="{StaticResource AccentButtonStyle}" Height="32" CornerRadius="4">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <FontIcon Glyph="&#xE896;" />
+                                    <TextBlock Text="PDF Rapor" />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                    
+                    <Rectangle Grid.Row="1" Height="1" Fill="#10FFFFFF"/>
+
+                    <!-- Findings Table -->
+                    <Grid Grid.Row="2">
+                         <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Table Header -->
+                        <Grid Margin="0,0,0,12" Background="#10FFFFFF" Padding="12,8" CornerRadius="4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1.5*" />
+                                <ColumnDefinition Width="0.8*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1.5*" />
+                                <ColumnDefinition Width="4*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="HEDEF" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                            <TextBlock Grid.Column="1" Text="PORT" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                            <TextBlock Grid.Column="2" Text="PROTOKOL" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                            <TextBlock Grid.Column="3" Text="SERVİS" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                            <TextBlock Grid.Column="4" Text="ÖNERİLEN ÇÖZÜM" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                        </Grid>
+
+                        <ListView ItemsSource="{Binding SelectedSession.Findings}" SelectionMode="None" Grid.Row="1">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="Margin" Value="0,2"/>
+                                    <Setter Property="Padding" Value="4"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnSpacing="12" Padding="8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1.5*" />
+                                            <ColumnDefinition Width="0.8*" />
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1.5*" />
+                                            <ColumnDefinition Width="4*" />
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <TextBlock Text="{Binding Target}" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Port}" FontFamily="Consolas" Opacity="0.9" VerticalAlignment="Center"/>
+                                        
+                                        <Border Grid.Column="2" Background="#10FFFFFF" HorizontalAlignment="Left" CornerRadius="4" Padding="6,2" VerticalAlignment="Center">
+                                             <TextBlock Text="{Binding Protocol}" FontSize="12" Opacity="0.8"/>
+                                        </Border>
+                                        
+                                        <TextBlock Grid.Column="3" Text="{Binding Service}" FontWeight="SemiBold" Foreground="{ThemeResource SystemAccentColor}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="4" Text="{Binding Recommendation}" TextWrapping="Wrap" Opacity="0.7" FontSize="13" LineHeight="20"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        
+                        <!-- Empty State -->
+                        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="16" Visibility="{Binding SelectedSession, Converter={StaticResource NullToVisibilityConverter}, FallbackValue=Collapsed}"> <!-- Note: Need Real Converter, simplified for now -->
+                             <FontIcon Glyph="&#xE7E8;" FontSize="48" Opacity="0.2"/>
+                             <TextBlock Text="Görüntülemek için soldan bir oturum seçin." Opacity="0.4"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Page>

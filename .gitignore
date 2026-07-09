@@ -1,0 +1,64 @@
+# Build output
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Ll]og/
+[Ll]ogs/
+artifacts/
+publish/
+TestResults/
+
+# Visual Studio / IDE
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build artifacts & caches
+*.cache
+*.log
+*.tmp
+*.bak
+build_*.txt
+msbuild_*.txt
+real_errors*.txt
+xamlcompiler.log
+errors.txt
+errors.log
+final_errors.log
+
+# Publish profiles (local only)
+*.pubxml
+*.pubxml.user
+Properties/PublishProfiles/
+
+# Secrets & local runtime config
+config.json
+history.json
+scan_history.json
+secrets.json
+.env
+.env.*
+appsettings.*.json
+
+# Certificates & keys
+*.pfx
+*.pem
+*.key
+*.crt
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# NuGet
+*.nupkg

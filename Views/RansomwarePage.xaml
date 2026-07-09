@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="CyberTool.Views.RansomwarePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CyberTool.Views"
+    xmlns:vm="using:CyberTool.ViewModels"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:CyberTool.Converters"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <vm:RansomwareViewModel x:Name="ViewModel" />
+    </Page.DataContext>
+
+    <Page.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <converters:SeverityColorConverter x:Key="SeverityConverter" />
+        
+        <Style x:Key="StatCardStyle" TargetType="Border">
+            <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}"/>
+            <Setter Property="BorderBrush" Value="#15FFFFFF"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="0,0,16,0"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid Padding="32" RowSpacing="32">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/> <!-- Header & Input -->
+            <RowDefinition Height="Auto"/> <!-- Main Stats -->
+            <RowDefinition Height="*"/>    <!-- Host List -->
+        </Grid.RowDefinitions>
+
+        <!-- 1. Header & Input -->
+        <StackPanel Spacing="16">
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <FontIcon Glyph="&#xE9ca;" FontSize="28" Foreground="#E74C3C"/>
+                <TextBlock Text="Ransomware Readiness Score" FontSize="28" FontWeight="Bold"/>
+            </StackPanel>
+            <TextBlock Text="Fidye yazılımı hazırlık seviyenizi ölçün. Ağdaki yayılma riskini ve zayıf halkaları tespit edin." Opacity="0.6" FontSize="16"/>
+
+            <!-- Input Bar -->
+            <Grid Margin="0,16,0,0" ColumnSpacing="16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBox Header="VLAN / Subnet (C Class)" Text="{Binding Subnet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="192.168.1" />
+                
+                <Button Grid.Column="1" Command="{Binding StartScanCommand}" Style="{StaticResource AccentButtonStyle}" VerticalAlignment="Bottom" Height="34">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <FontIcon Glyph="&#xE768;"/>
+                        <TextBlock Text="Analizi Başlat"/>
+                    </StackPanel>
+                </Button>
+                
+                <StackPanel Grid.Column="2" VerticalAlignment="Bottom" Margin="16,0,0,5">
+                    <TextBlock Text="{Binding StatusText}" Opacity="0.7" FontSize="12" Margin="0,0,0,4"/>
+                    <ProgressBar Value="{Binding ScanProgress}" Maximum="100" Visibility="{Binding IsScanning, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+
+        <!-- 2. Main Stats (The 'Money' Screen) -->
+        <Grid Grid.Row="1" ColumnSpacing="24">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- BIG PERCENTAGE -->
+            <Border Width="240" Height="240" CornerRadius="120" BorderBrush="#20E74C3C" BorderThickness="1" Background="#05E74C3C">
+                <Grid>
+                    <ProgressRing Value="100" Width="240" Height="240" Foreground="#10E74C3C" IsIndeterminate="False"/>
+                    <ProgressRing Value="{Binding ReadinessScore}" Width="240" Height="240" Foreground="#E74C3C" IsIndeterminate="False"/>
+                    
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="FİDYE RİSKİ" FontSize="14" Opacity="0.6" HorizontalAlignment="Center" FontWeight="Bold" CharacterSpacing="10"/>
+                        <TextBlock Text="{Binding ReadinessScore}" FontSize="48" FontWeight="Bold" Foreground="#E74C3C" HorizontalAlignment="Center"/>
+                        <TextBlock Text="KRİTİK" FontSize="16" FontWeight="SemiBold" Foreground="#E74C3C" HorizontalAlignment="Center" Visibility="{Binding ReadinessScore, Converter={StaticResource BoolToVisibilityConverter}}"/> <!-- Show if > 0 -->
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- 3 METRICS -->
+            <Grid Grid.Column="1" VerticalAlignment="Center" RowSpacing="16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <!-- Propagation -->
+                <Border Style="{StaticResource StatCardStyle}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Ellipse Width="40" Height="40" Fill="#20E67E22"/>
+                        <FontIcon Glyph="&#xE71C;" FontSize="20" Foreground="#E67E22" Margin="-40,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        
+                        <StackPanel Grid.Column="1" Margin="16,0,0,0" VerticalAlignment="Center">
+                            <TextBlock Text="Yayılma İhtimali" Opacity="0.7" FontSize="12"/>
+                            <TextBlock Text="{Binding PropagationRisk}" FontSize="20" FontWeight="Bold"/>
+                        </StackPanel>
+                        
+                         <TextBlock Grid.Column="2" Text="SMB (445) Yoğunluğu" Opacity="0.4" VerticalAlignment="Center" FontSize="11" FontStyle="Italic"/>
+                    </Grid>
+                </Border>
+
+                <!-- Recovery -->
+                <Border Grid.Row="1" Style="{StaticResource StatCardStyle}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Ellipse Width="40" Height="40" Fill="#203498DB"/>
+                        <FontIcon Glyph="&#xE777;" FontSize="20" Foreground="#3498DB" Margin="-40,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                        <StackPanel Grid.Column="1" Margin="16,0,0,0" VerticalAlignment="Center">
+                            <TextBlock Text="Kurtarma Zorluğu" Opacity="0.7" FontSize="12"/>
+                            <TextBlock Text="{Binding RecoveryDifficulty}" FontSize="20" FontWeight="Bold"/>
+                        </StackPanel>
+                        
+                        <TextBlock Grid.Column="2" Text="Yedekleme Portları" Opacity="0.4" VerticalAlignment="Center" FontSize="11" FontStyle="Italic"/>
+                    </Grid>
+                </Border>
+
+                <!-- Patient Zero -->
+                <Border Grid.Row="2" Style="{StaticResource StatCardStyle}" BorderBrush="#E74C3C">
+                    <Grid>
+                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Ellipse Width="40" Height="40" Fill="#20E74C3C"/>
+                        <FontIcon Glyph="&#xE909;" FontSize="20" Foreground="#E74C3C" Margin="-40,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                        <StackPanel Grid.Column="1" Margin="16,0,0,0" VerticalAlignment="Center">
+                            <TextBlock Text="İlk Düşecek Makine (Patient Zero)" Opacity="0.7" FontSize="12" Foreground="#E74C3C" FontWeight="SemiBold"/>
+                            <TextBlock Text="{Binding PatientZero}" FontSize="20" FontWeight="Bold"/>
+                        </StackPanel>
+
+                        <TextBlock Grid.Column="2" Text="En Yüksek Risk Skoru" Opacity="0.4" VerticalAlignment="Center" FontSize="11" FontStyle="Italic"/>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+        
+        <!-- 3. Host List Details -->
+        <TextBlock Grid.Row="2" Text="Analiz Edilen Cihazlar" Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,0,0,8" VerticalAlignment="Top"/>
+        <ListView Grid.Row="2" ItemsSource="{Binding HostResults}" Margin="0,48,0,0">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding IpAddress}" FontWeight="Bold"/>
+                        
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                            <CheckBox IsChecked="{Binding HasSmb}" IsEnabled="False" Content="SMB (445)"/>
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8">
+                            <CheckBox IsChecked="{Binding HasRdp}" IsEnabled="False" Content="RDP (3389)"/>
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Column="3" Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="Risk Puanı:" Opacity="0.6"/>
+                            <TextBlock Text="{Binding RiskScore}" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </Grid>
+</Page>

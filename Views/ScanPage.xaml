@@ -1,0 +1,711 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Name="PageRoot"
+    x:Class="CyberTool.Views.ScanPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CyberTool.Views"
+    xmlns:converters="using:CyberTool.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+    </Page.Resources>
+
+    <Grid Padding="24" RowSpacing="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" /> <!-- Executive Summary -->
+            <RowDefinition Height="Auto" /> <!-- Input Controls -->
+            <RowDefinition Height="*" />    <!-- Content -->
+        </Grid.RowDefinitions>
+
+        <!-- 1. Header Area Cleaned Up -->
+        <Grid>
+             <StackPanel Spacing="4">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                     <FontIcon Glyph="&#xE774;" FontSize="24" Foreground="{ThemeResource SystemAccentColorLight2}"/>
+                     <TextBlock Text="Port Tarama ve Zafiyet Analizi" Style="{StaticResource TitleTextBlockStyle}" />
+                </StackPanel>
+                <TextBlock Text="Hedef sistemde aktif portları, servisleri ve olası zafiyet risklerini tespit edin." Style="{StaticResource BodyTextBlockStyle}" Opacity="0.6" Margin="32,0,0,0"/>
+             </StackPanel>
+             
+             <!-- Status Badge -->
+             <Border HorizontalAlignment="Right" VerticalAlignment="Top" Background="#15FFFFFF" CornerRadius="16" Padding="12,6">
+                 <StackPanel Orientation="Horizontal" Spacing="8">
+                     <FontIcon Glyph="&#xE9F5;" FontSize="12" Opacity="0.7"/>
+                     <TextBlock Text="{Binding StatusText}" FontSize="12" Opacity="0.9" MaxWidth="300" TextTrimming="CharacterEllipsis"/>
+                 </StackPanel>
+             </Border>
+             
+             <!-- Report Buttons -->
+             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Spacing="8" Margin="0,0,0,0">
+                 <Button Command="{Binding GenerateExecutiveReportCommand}" Style="{StaticResource AccentButtonStyle}" Background="#30E74C3C" BorderBrush="Transparent" CornerRadius="8">
+                     <StackPanel Orientation="Horizontal" Spacing="8">
+                         <FontIcon Glyph="&#xE9F9;" Foreground="White"/>
+                         <TextBlock Text="Yönetici Raporu" Foreground="White" FontWeight="Bold"/>
+                     </StackPanel>
+                 </Button>
+                 <Button Command="{Binding GenerateTechnicalReportCommand}" Background="#15FFFFFF" BorderBrush="#30FFFFFF" BorderThickness="1" CornerRadius="8">
+                     <StackPanel Orientation="Horizontal" Spacing="8">
+                         <FontIcon Glyph="&#xE9F9;" Opacity="0.8"/>
+                         <TextBlock Text="Teknik Rapor" Opacity="0.8"/>
+                     </StackPanel>
+                 </Button>
+             </StackPanel>
+        </Grid>
+
+        <!-- 2. LIVE SECURITY DASHBOARD -->
+        <Border Grid.Row="1" Style="{StaticResource ModernCardStyle}" Background="#0DFFFFFF" BorderBrush="#20FFFFFF" BorderThickness="1" Margin="0,0,0,24" Visibility="{Binding RiskScore, Converter={StaticResource IntToVisibilityConverter}}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/> <!-- AI Summary & Score -->
+                    <ColumnDefinition Width="3*"/> <!-- Trend Graph -->
+                    <ColumnDefinition Width="1.5*"/> <!-- KPI Stats -->
+                </Grid.ColumnDefinitions>
+
+                <!-- 1. AI Insight & Score -->
+                <StackPanel Spacing="12">
+                    <StackPanel Orientation="Horizontal" Spacing="16">
+                        <Grid Width="70" Height="70">
+                             <ProgressRing Value="100" IsIndeterminate="False" Width="70" Height="70" Foreground="#10FFFFFF"/>
+                             <ProgressRing Value="{Binding RiskScore}" IsIndeterminate="False" Width="70" Height="70" Foreground="{Binding RiskScore, Converter={StaticResource SeverityConverter}, ConverterParameter=Foreground}"/>
+                             <TextBlock Text="{Binding RiskScore}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{Binding RiskScore, Converter={StaticResource SeverityConverter}, ConverterParameter=Foreground}"/>
+                        </Grid>
+                        <StackPanel VerticalAlignment="Center">
+                             <TextBlock Text="MEVCUT GÜVENLİK SKORU" FontSize="10" Opacity="0.5" CharacterSpacing="100"/>
+                             <TextBlock Text="{Binding RiskScore, Converter={StaticResource StringFormatConverter}, ConverterParameter='{} {0}/100'}" FontSize="24" FontWeight="Bold" Foreground="{Binding RiskScore, Converter={StaticResource SeverityConverter}, ConverterParameter=Foreground}"/>
+                        </StackPanel>
+                    </StackPanel>
+                    
+                    <Border Background="#10E74C3C" BorderBrush="#30E74C3C" BorderThickness="1" CornerRadius="8" Padding="12">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,0,0,4">
+                                <FontIcon Glyph="&#xE9F9;" Foreground="#E74C3C" FontSize="12"/>
+                                <TextBlock Text="YÖNETİCİ ÖZETİ" Foreground="#E74C3C" FontWeight="Bold" FontSize="10"/>
+                            </StackPanel>
+                            <TextBlock Text="{Binding ExecutiveSummary}" TextWrapping="Wrap" FontSize="13" LineHeight="20"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+                
+                <!-- 2. Risk Trend Graph (Sparkline) -->
+                <Grid Grid.Column="1" Margin="32,0">
+                    <TextBlock Text="30 GÜNLÜK RİSK TRENDİ" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="10" Opacity="0.5" CharacterSpacing="100"/>
+                    
+                    <Border VerticalAlignment="Bottom" Height="100" BorderBrush="#20FFFFFF" BorderThickness="0,0,0,1" Margin="0,24,0,0">
+                         <ItemsControl ItemsSource="{Binding RiskTrendData}">
+                             <ItemsControl.ItemsPanel>
+                                 <ItemsPanelTemplate>
+                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"/>
+                                 </ItemsPanelTemplate>
+                             </ItemsControl.ItemsPanel>
+                             <ItemsControl.ItemTemplate>
+                                 <DataTemplate>
+                                     <Grid VerticalAlignment="Bottom" Margin="2,0">
+                                         <Rectangle Width="8" Height="{Binding}" Fill="#40FFFFFF" RadiusX="2" RadiusY="2"/>
+                                         <Rectangle Width="8" Height="4" VerticalAlignment="Top" Fill="{ThemeResource SystemAccentColor}" RadiusX="2" RadiusY="2"/>
+                                     </Grid>
+                                 </DataTemplate>
+                             </ItemsControl.ItemTemplate>
+                         </ItemsControl>
+                    </Border>
+                </Grid>
+
+                <!-- 3. KPI Stats -->
+                <StackPanel Grid.Column="2" VerticalAlignment="Center" Spacing="12">
+                    <!-- Critical -->
+                     <Border Background="#15E74C3C" CornerRadius="8" Padding="12,8">
+                         <Grid>
+                             <StackPanel Orientation="Horizontal" Spacing="8">
+                                 <FontIcon Glyph="&#xE783;" Foreground="#E74C3C"/>
+                                 <TextBlock Text="KRİTİK RİSK" Foreground="#E74C3C" FontWeight="SemiBold"/>
+                             </StackPanel>
+                             <TextBlock Text="{Binding RiskyServiceCount}" HorizontalAlignment="Right" FontWeight="Bold" Foreground="#E74C3C"/>
+                         </Grid>
+                     </Border>
+                     
+                     <!-- Exposed -->
+                     <Border Background="#15E67E22" CornerRadius="8" Padding="12,8">
+                         <Grid>
+                             <StackPanel Orientation="Horizontal" Spacing="8">
+                                 <FontIcon Glyph="&#xE774;" Foreground="#E67E22"/>
+                                 <TextBlock Text="DIŞA AÇIK" Foreground="#E67E22" FontWeight="SemiBold"/>
+                             </StackPanel>
+                             <TextBlock Text="{Binding ExternalServiceCount}" HorizontalAlignment="Right" FontWeight="Bold" Foreground="#E67E22"/>
+                         </Grid>
+                     </Border>
+                     
+                     <!-- Safe -->
+                     <Border Background="#152ECC71" CornerRadius="8" Padding="12,8">
+                         <Grid>
+                             <StackPanel Orientation="Horizontal" Spacing="8">
+                                 <FontIcon Glyph="&#xE73E;" Foreground="#2ECC71"/>
+                                 <TextBlock Text="GÜVENLİ ALAN" Foreground="#2ECC71" FontWeight="SemiBold"/>
+                             </StackPanel>
+                             <TextBlock Text="{Binding InternalServiceCount}" HorizontalAlignment="Right" FontWeight="Bold" Foreground="#2ECC71"/>
+                         </Grid>
+                     </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- 2. Controls & Dashboard Area -->
+        <Grid Grid.Row="2" ColumnSpacing="24">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2.5*" /> <!-- Inputs -->
+                <ColumnDefinition Width="1*" /> <!-- Dashboard/Score -->
+            </Grid.ColumnDefinitions>
+
+            <!-- Input Controls Card -->
+            <Border Style="{StaticResource ModernCardStyle}">
+                <StackPanel Spacing="24">
+                    <Grid ColumnSpacing="16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBox Header="Hedef IP / Host" Text="{Binding Target, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="örn: scanme.nmap.org" CornerRadius="4" Height="Auto" Padding="10,8"/>
+                        <NumberBox Grid.Column="1" Header="Başlangıç" Value="{Binding PortFrom, Mode=TwoWay}" Minimum="1" Maximum="65535" SpinButtonPlacementMode="Compact" CornerRadius="4"/>
+                        <NumberBox Grid.Column="2" Header="Bitiş" Value="{Binding PortTo, Mode=TwoWay}" Minimum="1" Maximum="65535" SpinButtonPlacementMode="Compact" CornerRadius="4"/>
+                    </Grid>
+
+                    <Grid ColumnSpacing="12">
+                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <Button Style="{StaticResource AccentButtonStyle}" Command="{Binding StartCommand}" Padding="32,10" CornerRadius="8">
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <FontIcon Glyph="&#xE768;" FontSize="16"/>
+                                <TextBlock Text="Taramayı Başlat" FontWeight="SemiBold"/>
+                            </StackPanel>
+                        </Button>
+                        
+                         <Button Grid.Column="1" Command="{Binding CancelCommand}" Padding="20,10" CornerRadius="8" BorderThickness="1">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <FontIcon Glyph="&#xE711;" FontSize="16"/>
+                                <TextBlock Text="Durdur"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Grid.Column="3" Click="ImportNmapXml_Click" Padding="16,10" CornerRadius="8" Background="Transparent" BorderThickness="1" BorderBrush="#20FFFFFF">
+                             <StackPanel Orientation="Horizontal" Spacing="8">
+                                <FontIcon Glyph="&#xE8B5;" FontSize="16" Opacity="0.7"/>
+                                <TextBlock Text="Nmap XML Yükle" Opacity="0.8"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Stats / Risk Score Card -->
+            <Border Grid.Column="1" Style="{StaticResource ModernCardStyle}" Background="#08FFFFFF">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <!-- Circular Score -->
+                    <Grid Width="90" Height="90" Margin="0,0,16,0">
+                         <ProgressRing Value="100" IsIndeterminate="False" Width="90" Height="90" Foreground="#20FFFFFF"/>
+                         <ProgressRing Value="{Binding RiskScore}" IsIndeterminate="False" Width="90" Height="90" Foreground="{x:Bind ViewModel.RiskScore, Mode=OneWay, Converter={StaticResource SeverityConverter}, ConverterParameter=Foreground, FallbackValue=Green}"/>
+                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                             <TextBlock Text="{Binding RiskScore}" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Counts -->
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="10">
+                        <TextBlock Text="Güvenlik Skoru" Opacity="0.6" FontSize="11" Margin="0,-4,0,4"/>
+                        <Grid>
+                             <Border Background="#20FF0000" CornerRadius="4" Padding="8,2" HorizontalAlignment="Left"><TextBlock Text="{Binding CriticalCount}" Foreground="#FF4444" FontWeight="Bold"/></Border>
+                             <TextBlock Text="Kritik Risk" VerticalAlignment="Center" Margin="40,0,0,0" FontSize="12"/>
+                        </Grid>
+                        <Grid>
+                             <Border Background="#20FFA500" CornerRadius="4" Padding="8,2" HorizontalAlignment="Left"><TextBlock Text="{Binding MediumCount}" Foreground="#FFA500" FontWeight="Bold"/></Border>
+                             <TextBlock Text="Orta Risk" VerticalAlignment="Center" Margin="40,0,0,0" FontSize="12"/>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- 3. Main Content Tabs -->
+        <Pivot Grid.Row="3">
+            <!-- TAB 1: Port List -->
+            <PivotItem>
+                 <PivotItem.Header>
+                     <StackPanel Orientation="Horizontal" Spacing="8">
+                         <FontIcon Glyph="&#xE8EF;" FontSize="16"/>
+                         <TextBlock Text="Bulgular &amp; Portlar"/>
+                     </StackPanel>
+                 </PivotItem.Header>
+                 
+                <Grid Padding="0,16,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Modern Table Design -->
+                    <Grid Grid.Row="0" Margin="0,0,0,8" Padding="16,12" Background="#15FFFFFF" CornerRadius="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.5*" />
+                            <ColumnDefinition Width="0.8*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1.4*" /> <!-- New: Verification -->
+                            <ColumnDefinition Width="1.2*" />
+                            <ColumnDefinition Width="1.2*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1.2*" />
+                            <ColumnDefinition Width="2.5*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="HEDEF" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                        <TextBlock Grid.Column="1" Text="PORT" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                        <TextBlock Grid.Column="2" Text="SERVİS" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                        <TextBlock Grid.Column="3" Text="DOĞRULAMA" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                        <TextBlock Grid.Column="4" Text="ERİŞİM" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                        <TextBlock Grid.Column="5" Text="GÖRÜLME" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                        <TextBlock Grid.Column="6" Text="SORUMLU" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                        <TextBlock Grid.Column="7" Text="RİSK" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                        <TextBlock Grid.Column="8" Text="ÖNERİLEN AKSİYON" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.5"/>
+                    </Grid>
+
+                    <ListView x:Name="ResultsListView" Grid.Row="1" ItemsSource="{Binding Results}" SelectionMode="Single" Tag="{x:Bind ViewModel}">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="Margin" Value="0,2"/>
+                                <Setter Property="Padding" Value="8,4"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="8,8" Background="Transparent"> <!-- Row Hover effect comes from ListViewItem -->
+                                    <Grid.ContextFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="🛡️ Riski Kabul Et / Geri Al" 
+                                                            Icon="Accept"
+                                                            Command="{Binding ElementName=ResultsListView, Path=Tag.AcceptRiskCommand}" 
+                                                            CommandParameter="{Binding}" />
+                                        </MenuFlyout>
+                                    </Grid.ContextFlyout>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1.5*" />
+                                        <ColumnDefinition Width="0.8*" />
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="1.4*" /> <!-- New: Verification -->
+                                        <ColumnDefinition Width="1.2*" />
+                                        <ColumnDefinition Width="1.2*" />
+                                        <ColumnDefinition Width="1*" /> 
+                                        <ColumnDefinition Width="1.2*" />
+                                        <ColumnDefinition Width="2.5*" />
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <TextBlock Text="{Binding Target}" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding Port}" VerticalAlignment="Center" FontFamily="Consolas"/>
+                                    
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Spacing="4">
+                                        <TextBlock Text="{Binding Service}" Opacity="0.8" VerticalAlignment="Center"/>
+                                        <Button Background="Transparent" Padding="4" BorderThickness="0" MinWidth="0" MinHeight="0"
+                                                ToolTipService.ToolTip="{Binding OpenReason}">
+                                            <FontIcon Glyph="&#xE946;" FontSize="12" Opacity="0.5"/>
+                                            <Button.Flyout>
+                                                <Flyout>
+                                                    <TextBlock Text="{Binding OpenReason}" />
+                                                </Flyout>
+                                            </Button.Flyout>
+                                        </Button>
+                                    </StackPanel>
+                                    
+                                    <!-- Verification Status -->
+                                    <StackPanel Grid.Column="3" VerticalAlignment="Center" Spacing="2">
+                                        <StackPanel Orientation="Horizontal" Spacing="6" Visibility="{Binding BannerVerified, Converter={StaticResource BoolToVisibilityConverter}}">
+                                            <FontIcon Glyph="&#xE73E;" Foreground="#00CC6A" FontSize="12"/>
+                                            <TextBlock Text="Banner Doğrulandı" FontSize="11" Opacity="0.8"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Spacing="6" Visibility="{Binding VersionMissing, Converter={StaticResource BoolToVisibilityConverter}}">
+                                            <FontIcon Glyph="&#xE7BA;" Foreground="#FFCC00" FontSize="12"/>
+                                            <TextBlock Text="Versiyon Yok" FontSize="11" Opacity="0.8"/>
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                    <Border Grid.Column="4" Background="#10FFFFFF" CornerRadius="4" Padding="6,2" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                         <TextBlock Text="{Binding AccessScope}" FontSize="12"/>
+                                    </Border>
+                                    
+                                    <TextBlock Grid.Column="5" Text="{Binding AgeDescription}" FontSize="12" Opacity="0.5" VerticalAlignment="Center" FontStyle="Italic"/>
+
+                                    <Border Grid.Column="6" Background="#20FFFFFF" CornerRadius="4" Padding="8,2" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding ResponsibleTeam}" FontSize="12" FontWeight="SemiBold"/>
+                                    </Border>
+
+                                    <StackPanel Grid.Column="7" Orientation="Horizontal" VerticalAlignment="Center" Spacing="6">
+                                        <CheckBox IsChecked="{Binding IsRiskAccepted, Mode=TwoWay}" 
+                                                  Command="{Binding ElementName=ResultsListView, Path=Tag.AcceptRiskCommand}" 
+                                                  CommandParameter="{Binding}"
+                                                  ToolTipService.ToolTip="Bu port bilinçli açık (Riski Kabul Et)"
+                                                  MinWidth="0" MinHeight="0" Padding="0" Margin="0" />
+                                                  
+                                        <FontIcon Glyph="&#xE7BA;" FontSize="12" Foreground="{Binding Risk, Converter={StaticResource SeverityConverter}, ConverterParameter=Foreground}" ToolTipService.ToolTip="{Binding RiskReason}"/>
+                                        <TextBlock Text="{Binding Risk}" FontSize="13" ToolTipService.ToolTip="{Binding RiskReason}" />
+                                    </StackPanel>
+
+                                    <TextBlock Grid.Column="8" Text="{Binding ShortRecommendation}" Foreground="{ThemeResource SystemAccentColor}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" ToolTipService.ToolTip="{Binding Recommendation}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </PivotItem>
+
+            <!-- TAB 2: Scenarios -->
+            <PivotItem>
+                 <PivotItem.Header>
+                     <StackPanel Orientation="Horizontal" Spacing="8">
+                         <FontIcon Glyph="&#xE9ca;" FontSize="16"/>
+                         <TextBlock Text="Saldırı Zinciri"/>
+                     </StackPanel>
+                 </PivotItem.Header>
+                 
+                <ScrollViewer Margin="0,12,0,0">
+                    <StackPanel Spacing="20">
+                        <!-- AI Simulation Control -->
+                        <!-- 1. AI Recommendation Card -->
+                        <Border Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" CornerRadius="12" Padding="20" BorderBrush="#20FFFFFF" BorderThickness="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                     <ColumnDefinition Width="Auto"/>
+                                     <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                 <FontIcon Glyph="&#xE9ca;" FontSize="40" VerticalAlignment="Top" Margin="0,4,24,0" Foreground="{ThemeResource SystemAccentColor}"/>
+                                 
+                                 <StackPanel Grid.Column="1" Spacing="6">
+                                     <TextBlock Text="🧠 AI TAVSİYESİ (GÜNÜN ÖNCELİĞİ)" Opacity="0.6" FontSize="12" FontWeight="Bold"/>
+                                     <TextBlock Text="{Binding BestAction}" FontSize="20" FontWeight="Bold" TextWrapping="Wrap"/>
+                                     <TextBlock Text="{Binding BestActionReason}" Opacity="0.8" TextWrapping="Wrap" Margin="0,4,0,0" FontSize="14"/>
+                                 </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- 2. Visual Attack Graph -->
+                        <TextBlock Text="Saldırı Zinciri Görselleştirmesi" Style="{StaticResource SectionHeaderStyle}" Opacity="0.9" FontSize="18"/>
+                        
+                        <Border Background="#08FFFFFF" CornerRadius="12" Height="500" Padding="0">
+                             <Grid>
+                                 <!-- Canvas for Nodes and Links -->
+                                 <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                     <!-- 1. LINKS -->
+                                     <ItemsControl ItemsSource="{Binding AttackLinks}">
+                                         <ItemsControl.ItemsPanel>
+                                             <ItemsPanelTemplate>
+                                                 <Canvas/>
+                                             </ItemsPanelTemplate>
+                                         </ItemsControl.ItemsPanel>
+                                         <ItemsControl.ItemTemplate>
+                                             <DataTemplate>
+                                                 <Line X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}" 
+                                                       Stroke="{Binding Stroke, Converter={StaticResource HexToBrushConverter}}" 
+                                                       StrokeThickness="3" StrokeDashArray="2 2"/>
+                                             </DataTemplate>
+                                         </ItemsControl.ItemTemplate>
+                                     </ItemsControl>
+
+                                     <!-- 2. NODES -->
+                                     <ItemsControl ItemsSource="{Binding AttackNodes}">
+                                         <ItemsControl.ItemsPanel>
+                                             <ItemsPanelTemplate>
+                                                 <Canvas/>
+                                             </ItemsPanelTemplate>
+                                         </ItemsControl.ItemsPanel>
+                                         <ItemsControl.ItemTemplate>
+                                             <DataTemplate>
+                                                 <Border Background="{Binding Color, Converter={StaticResource HexToBrushConverter}}" Width="200" CornerRadius="8" Padding="12" BorderBrush="#30FFFFFF" BorderThickness="1">
+                                                      <Border.RenderTransform>
+                                                          <TranslateTransform X="{Binding X}" Y="{Binding Y}"/>
+                                                      </Border.RenderTransform>
+                                                      <StackPanel>
+                                                          <Grid>
+                                                              <Grid.ColumnDefinitions>
+                                                                  <ColumnDefinition Width="Auto"/>
+                                                                  <ColumnDefinition Width="*"/>
+                                                              </Grid.ColumnDefinitions>
+                                                              <FontIcon Glyph="{Binding Icon}" FontSize="20" Foreground="White" VerticalAlignment="Top" Margin="0,0,12,0"/>
+                                                              <StackPanel Grid.Column="1">
+                                                                  <TextBlock Text="{Binding Title}" FontWeight="Bold" Foreground="White" FontSize="13" TextWrapping="Wrap"/>
+                                                                  <TextBlock Text="{Binding Description}" FontSize="11" Opacity="0.9" Foreground="White" TextWrapping="Wrap" Margin="0,4,0,0"/>
+                                                              </StackPanel>
+                                                          </Grid>
+                                                      </StackPanel>
+                                                 </Border>
+                                             </DataTemplate>
+                                         </ItemsControl.ItemTemplate>
+                                     </ItemsControl>
+
+                                 </Canvas>
+                                 
+                                 <!-- Overlay Stats (Top Right) -->
+                                 <Border HorizontalAlignment="Right" VerticalAlignment="Top" Margin="24" Background="#20E74C3C" CornerRadius="20" Padding="16,6">
+                                     <StackPanel Orientation="Horizontal" Spacing="8">
+                                         <FontIcon Glyph="&#xE786;" FontSize="14" Foreground="#E74C3C"/> 
+                                         <TextBlock FontWeight="Bold" Foreground="#E74C3C" FontSize="14">
+                                             <Run Text="ZİNCİRİN GERÇEKLEŞME OLASILIĞI: "/>
+                                             <Run Text="{Binding AttackProbability}"/>
+                                         </TextBlock>
+                                     </StackPanel>
+                                 </Border>
+                             </Grid>
+                        </Border>
+                         
+                         <TextBlock Text="Detaylı Senaryolar (Yapay Zeka Raporu)" Style="{StaticResource SectionHeaderStyle}" Opacity="0.8" FontSize="16"/>
+
+                         <!-- Simulation Results -->
+                         <ItemsControl ItemsSource="{Binding Scenarios}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Expander IsExpanded="True" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="0,0,0,12" Background="#10AA0000">
+                                            <Expander.Header>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <StackPanel>
+                                                        <TextBlock Text="{Binding Title}" FontWeight="Bold" FontSize="15"/>
+                                                        <StackPanel Orientation="Horizontal" Spacing="8">
+                                                            <TextBlock Text="{Binding Severity}" Foreground="{Binding Severity, Converter={StaticResource SeverityConverter}, ConverterParameter=Foreground}" FontSize="12"/>
+                                                            
+                                                            <!-- Time Badge -->
+                                                            <Border Background="#20E74C3C" CornerRadius="4" Padding="6,2" Visibility="{Binding DaysOpen, Converter={StaticResource IntToVisibilityConverter}}">
+                                                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                                                    <FontIcon Glyph="&#xE916;" FontSize="10" Foreground="#E74C3C"/>
+                                                                    <TextBlock FontSize="10" FontWeight="SemiBold" Foreground="#E74C3C">
+                                                                        <Run Text="{Binding DaysOpen}"/>
+                                                                        <Run Text=" Gündür Açık"/>
+                                                                    </TextBlock>
+                                                                </StackPanel>
+                                                            </Border>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                    <Border Grid.Column="1" Background="{Binding Severity, Converter={StaticResource SeverityConverter}}" CornerRadius="4" Padding="8,2" VerticalAlignment="Center" Margin="0,0,16,0" ToolTipService.ToolTip="{Binding Rationale}">
+                                                         <StackPanel Orientation="Horizontal" Spacing="6">
+                                                             <FontIcon Glyph="&#xE7BA;" FontSize="12" Foreground="White"/>
+                                                             <TextBlock Text="{Binding DisplaySeverity}" FontSize="11" FontWeight="Bold" Foreground="White"/>
+                                                         </StackPanel>
+                                                    </Border>
+                                                </Grid>
+                                            </Expander.Header>
+                                            <StackPanel Padding="20" Spacing="16">
+                                                <TextBlock Text="{Binding Description}" TextWrapping="Wrap" Opacity="0.9"/>
+                                                
+                                                <Grid ColumnSpacing="12" Background="#10FFFFFF" Padding="12" CornerRadius="6">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <FontIcon Glyph="&#xE90A;" FontSize="20" Opacity="0.6" VerticalAlignment="Top" Margin="0,2,0,0"/>
+                                                    <StackPanel Grid.Column="1" Spacing="4">
+                                                        <TextBlock Text="Saldırgan Zihniyeti" FontWeight="SemiBold" Opacity="0.7" FontSize="12"/>
+                                                        <TextBlock Text="{Binding AttackerMindset}" TextWrapping="Wrap" FontStyle="Italic"/>
+                                                    </StackPanel>
+                                                </Grid>
+
+                                                <Border Background="#10008000" BorderBrush="Green" BorderThickness="1" CornerRadius="6" Padding="16">
+                                                     <StackPanel>
+                                                         <StackPanel Orientation="Horizontal" Spacing="8">
+                                                             <FontIcon Glyph="&#xE73E;" Foreground="Green" FontSize="16"/>
+                                                             <TextBlock Text="ETKİ VE ÖNERİ" Foreground="Green" FontWeight="Bold"/>
+                                                         </StackPanel>
+                                                         <TextBlock Text="{Binding Impact}" TextWrapping="Wrap" Margin="0,8,0,0" Opacity="0.9"/>
+                                                     </StackPanel>
+                                                 </Border>
+                                            </StackPanel>
+                                        </Expander>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                         </ItemsControl>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+
+            <!-- TAB 3: Hardening -->
+             <PivotItem>
+                 <PivotItem.Header>
+                     <StackPanel Orientation="Horizontal" Spacing="8">
+                         <FontIcon Glyph="&#xE72E;" FontSize="16"/>
+                         <TextBlock Text="Sistem Güvenliği"/>
+                     </StackPanel>
+                 </PivotItem.Header>
+                 
+                 <ScrollViewer Margin="0,12,0,0">
+                     <StackPanel Spacing="24">
+                         <!-- Grid start removed -->
+
+ 
+                             <!-- Panel 1 Removed -->
+
+ 
+                              <!-- Panel 2 Removed -->
+
+ 
+                         <!-- 2. What-If Section -->
+                         <StackPanel>
+                            <TextBlock Text="Aksiyon Planı" Style="{StaticResource SectionHeaderStyle}" Margin="0,8,0,12" Opacity="0.8" FontSize="16"/>
+                            
+                            <Button Command="{Binding GenerateActionPlanCommand}" Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Left" Margin="0,0,0,16">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <FontIcon Glyph="&#xE90F;"/> 
+                                    <TextBlock Text="Önerilen Aksiyon Planını Oluştur"/>
+                                </StackPanel>
+                            </Button>
+
+                            <ItemsControl ItemsSource="{Binding HardeningSuggestions}">
+                               <ItemsControl.ItemTemplate>
+                                   <DataTemplate>
+                                       <Border Style="{StaticResource ModernCardStyle}" Margin="0,0,0,12" Padding="16">
+                                            <StackPanel>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+            
+                                                    <!-- Icon -->
+                                                    <Border Width="48" Height="48" CornerRadius="12" Background="#15FFFFFF" Margin="0,0,16,0">
+                                                        <FontIcon Glyph="{Binding Icon}" FontSize="24" Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+                                                    </Border>
+            
+                                                    <!-- Content -->
+                                                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="4">
+                                                        <TextBlock Text="{Binding ActionName}" FontWeight="Bold" FontSize="15"/>
+                                                        <StackPanel Orientation="Horizontal" Spacing="8" Opacity="0.7">
+                                                            <TextBlock Text="{Binding AffectedService}" FontSize="12"/>
+                                                            <TextBlock Text="•"/>
+                                                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                                                <FontIcon Glyph="&#xE916;" FontSize="10"/> <!-- Timer -->
+                                                                <TextBlock Text="{Binding EstimatedEffort}" FontSize="12"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                    </StackPanel>
+            
+                                                    <!-- Stats & Action -->
+                                                    <StackPanel Grid.Column="2" VerticalAlignment="Center" Spacing="4" HorizontalAlignment="Right">
+                                                        <StackPanel Orientation="Horizontal" Spacing="6" HorizontalAlignment="Right">
+                                                            <TextBlock Text="Risk:" Opacity="0.6" VerticalAlignment="Center" FontSize="12"/>
+                                                            <TextBlock Text="{Binding CurrentRiskScore}" FontWeight="Bold" Foreground="#E74C3C"/>
+                                                            <FontIcon Glyph="&#xE72A;" FontSize="12" Opacity="0.5" VerticalAlignment="Center"/> <!-- Arrow Right -->
+                                                            <TextBlock Text="{Binding ProjectedRiskScore}" FontWeight="Bold" Foreground="#2ECC71"/>
+                                                        </StackPanel>
+                                                        
+                                                         <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
+                                                            <!-- Download Script Button -->
+                                                            <Button Command="{Binding DownloadScriptCommand}" CommandParameter="{Binding}" Visibility="{Binding HasRemediation, Converter={StaticResource BoolToVisibilityConverter}}" Padding="8,4" CornerRadius="4" Background="#102ECC71" BorderBrush="#2ECC71" BorderThickness="1">
+                                                                 <StackPanel Orientation="Horizontal" Spacing="6">
+                                                                     <FontIcon Glyph="&#xE896;" FontSize="12" Foreground="#2ECC71"/> 
+                                                                     <TextBlock Text="Script İndir" FontSize="11" FontWeight="Bold" Foreground="#2ECC71"/>
+                                                                 </StackPanel>
+                                                            </Button>
+                                                            
+                                                            <!-- Gain Badge -->
+                                                            <Border Background="#102ECC71" CornerRadius="4" Padding="8,4" BorderBrush="#2ECC71" BorderThickness="1">
+                                                                  <TextBlock Text="{Binding RiskReduction, Converter={StaticResource StringFormatConverter}, ConverterParameter='+{0} Puan'}" FontSize="11" FontWeight="Bold" Foreground="#2ECC71"/>
+                                                            </Border>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </Grid>
+                                                
+                                                <!-- 🎓 Education Mode Expander -->
+                                                <Expander Header="🎓 Eğitim Modu: Bunu Neden Yapmalıyım?" Margin="0,12,0,0" HorizontalAlignment="Stretch" Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}">
+                                                    <StackPanel Spacing="16" Margin="0,12,0,0">
+                                                         <!-- Definition -->
+                                                         <StackPanel>
+                                                             <TextBlock Text="📚 Bu Nedir?" FontWeight="Bold" Foreground="#64B5F6" Margin="0,0,0,4"/>
+                                                             <TextBlock Text="{Binding EducationalContent}" TextWrapping="Wrap" Opacity="0.8"/>
+                                                         </StackPanel>
+                                                         
+                                                         <!-- Hacker View -->
+                                                         <StackPanel>
+                                                             <TextBlock Text="🕵️‍♂️ Hacker Gözüyle" FontWeight="Bold" Foreground="#E57373" Margin="0,0,0,4"/>
+                                                             <TextBlock Text="{Binding HackerMindset}" TextWrapping="Wrap" FontStyle="Italic" Opacity="0.9" Foreground="#FFEBEE"/>
+                                                         </StackPanel>
+    
+                                                         <!-- Real World -->
+                                                         <StackPanel>
+                                                             <TextBlock Text="🌍 Gerçek Dünya Örneği" FontWeight="Bold" Foreground="#81C784" Margin="0,0,0,4"/>
+                                                             <TextBlock Text="{Binding RealWorldExample}" TextWrapping="Wrap" Opacity="0.8"/>
+                                                         </StackPanel>
+                                                    </StackPanel>
+                                                </Expander>
+                                            </StackPanel>
+                                        </Border>
+                                   </DataTemplate>
+                               </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                         </StackPanel>
+ 
+                         <!-- 3. Compliance Section -->
+                         <StackPanel>
+                             <TextBlock Text="Yönetim &amp; Uyum Raporu" Style="{StaticResource SectionHeaderStyle}" Margin="0,8,0,12" Opacity="0.8" FontSize="16"/>
+        
+                             <ItemsControl ItemsSource="{Binding ComplianceReport}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" Spacing="16"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Style="{StaticResource ModernCardStyle}" Width="250" Padding="16">
+
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        
+                                        <!-- Header -->
+                                        <TextBlock Text="{Binding StandardName}" FontSize="14" FontWeight="Bold" Opacity="0.7" HorizontalAlignment="Center"/>
+                                        
+                                        <!-- Status Icon -->
+                                        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Margin="0,16,0,16">
+                                            <Border Width="64" Height="64" CornerRadius="32" Background="#10FFFFFF" BorderBrush="{Binding StatusColor}" BorderThickness="2">
+                                                <FontIcon Glyph="{Binding Icon}" FontSize="32" Foreground="{Binding StatusColor}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <TextBlock Text="{Binding StatusText}" Foreground="{Binding StatusColor}" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                                        </StackPanel>
+
+                                        <!-- Violations -->
+                                        <ItemsControl Grid.Row="2" ItemsSource="{Binding ViolationReasons}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                                        <FontIcon Glyph="&#xE711;" FontSize="10" Foreground="#E74C3C" Margin="0,2,6,0" VerticalAlignment="Top"/>
+                                                        <TextBlock Text="{Binding}" FontSize="11" Opacity="0.6" TextWrapping="Wrap"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                     </ItemsControl>
+                 </StackPanel>
+                 </StackPanel> <!-- Closing main stackpanel -->
+             </ScrollViewer>
+         </PivotItem>
+    </Pivot>
+</Grid>
+</Page>
