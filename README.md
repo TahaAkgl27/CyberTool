@@ -35,6 +35,8 @@
 
 **CyberTool** is a local-first Windows desktop application built with **WinUI 3** and **.NET 8**. It unifies network discovery, Windows system enumeration, security assessment helpers, optional AI-assisted analysis, and training-oriented simulations in one transparent toolkit.
 
+Maintained as an independent open-source project by TahaAkgl27 and contributors.
+
 Organizations and learners often juggle separate scripts, scanners, and ad-hoc PowerShell for basic Windows diagnostics. CyberTool reduces that fragmentation with a structured workflow—from port scan to device profile to exportable reports—while keeping data on the local machine.
 
 > **Authorized use only.** CyberTool includes security testing and simulation capabilities. Read [DISCLAIMER.md](DISCLAIMER.md) before use.
